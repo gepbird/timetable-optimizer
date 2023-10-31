@@ -4,7 +4,7 @@ A CLI application with hard-coded dummy subject information. A timetable output 
 
 ## Tasks:
 
-- [ ] Define data structures for subjects and courses
+- [x] Define data structures for subjects and courses
 - [ ] Hard code subject info
 - [ ] Define filtering rules, put them in data structures
 - [ ] Implement a filtering algorithm
