@@ -16,6 +16,9 @@ pub struct Course<'a> {
   pub people_limit: u32,
   pub start_time: WeekTime,
   pub end_time: WeekTime,
+  pub location: &'a str,
+  pub teacher: &'a str,
+  pub language : &'a str,
   pub occurence: Occurence,
 }
 
