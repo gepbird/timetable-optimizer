@@ -3,7 +3,7 @@ use chrono::NaiveTime;
 pub struct Subject<'a> {
   pub name: &'a str,
   pub code: &'a str,
-  pub credits: i8,
+  pub credits: u32,
   pub courses: Vec<OneOfCourse>,
 }
 
@@ -11,9 +11,9 @@ type OneOfCourse = Vec<Course<'static>>;
 pub struct Course<'a> {
   pub code: &'a str,
   pub course_type: CourseType,
-  pub people_joined: i8,
-  pub people_queue: i8,
-  pub people_limit: i8,
+  pub people_joined: u32,
+  pub people_queue: u32,
+  pub people_limit: u32,
   pub start_time: WeekTime,
   pub end_time: WeekTime,
   pub occurence: Occurence,
