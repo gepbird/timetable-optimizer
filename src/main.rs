@@ -1,5 +1,7 @@
 mod data;
+mod sample_data;
 
 fn main() {
-  println!("Hello, world!");
+  let subjects = sample_data::get_subjects();
+  println!("Subjects: {:?}", subjects);
 }
