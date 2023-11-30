@@ -1,3 +1,4 @@
+use std::fs;
 use std::fs::File;
 use std::io::Write;
 
@@ -36,8 +37,11 @@ fn generate_combinations_recursive<'a>(
 }
 
 fn write_timetables(timetables: Vec<Timetable>) {
+  fs::remove_dir_all("out").ok();
+  fs::create_dir_all("out").unwrap();
+
   for (index, timetable) in timetables.iter().enumerate() {
-    let file_name =format!("out/timetable_{:04}.json", index);
+    let file_name = format!("out/timetable_{:04}.json", index);
     let serialized_timetable = serde_json::to_string_pretty(timetable).unwrap();
 
     File::create(file_name)
