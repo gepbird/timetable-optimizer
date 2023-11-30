@@ -1,6 +1,7 @@
 use chrono::NaiveTime;
+use serde::Serialize;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Subject<'a> {
   pub name: &'a str,
   pub code: &'a str,
@@ -8,9 +9,10 @@ pub struct Subject<'a> {
   pub courses: Vec<OneOfCourse<'a>>,
 }
 
-type OneOfCourse<'a> = Vec<Course<'a>>;
+pub type OneOfCourse<'a> = Vec<Course<'a>>;
+pub type Timetable<'a> = Vec<Course<'a>>;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Course<'a> {
   pub code: &'a str,
   pub course_type: CourseType,
@@ -21,21 +23,21 @@ pub struct Course<'a> {
   pub occurence: Occurence,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 pub enum CourseType {
   Lecture,
   Laboratory,
   Practice,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Enrollment {
   pub people_joined: u32,
   pub people_queue: u32,
   pub people_limit: u32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Occurence {
   pub weeks: Weeks,
   pub week_day: WeekDay,
@@ -43,7 +45,7 @@ pub struct Occurence {
   pub end_time: NaiveTime,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 #[allow(dead_code)]
 pub enum Weeks {
   Every,
@@ -51,7 +53,7 @@ pub enum Weeks {
   Odd,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 #[allow(dead_code)]
 pub enum WeekDay {
   Monday = 0,
