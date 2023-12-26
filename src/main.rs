@@ -1,42 +1,16 @@
+use permutator::CartesianProduct;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
 
+use data::Course;
 use data::Subject;
 use data::Timetable;
 
 mod data;
 mod sample_data;
 
-fn generate_combinations(subjects: Vec<Subject>) -> Vec<Timetable> {
-  let mut timetables = Vec::new();
-  generate_combinations_recursive(&subjects, Vec::new(), &mut timetables, 0);
-  timetables
-}
-
-fn generate_combinations_recursive<'a>(
-  subjects: &Vec<Subject<'a>>,
-  current_timetable: Timetable<'a>,
-  timetables: &mut Vec<Timetable<'a>>,
-  subject_index: usize,
-) {
-  if subject_index == subjects.len() {
-    // If we reached the end of subjects, add the current timetable to the list
-    timetables.push(current_timetable.clone());
-    return;
-  }
-
-  for optional_courses in &subjects[subject_index].courses {
-    for course in optional_courses {
-      let mut new_timetable = current_timetable.clone();
-      new_timetable.push(course.clone());
-
-      generate_combinations_recursive(subjects, new_timetable, timetables, subject_index + 1);
-    }
-  }
-}
-
-fn write_timetables(timetables: Vec<Timetable>) {
+fn save_timetables(timetables: Vec<Vec<&Course>>) {
   fs::remove_dir_all("out").ok();
   fs::create_dir_all("out").unwrap();
 
@@ -51,8 +25,30 @@ fn write_timetables(timetables: Vec<Timetable>) {
   }
 }
 
+pub fn generate_timetables<'a>(subjects: &'a Vec<Subject<'a>>) -> Vec<Timetable> {
+  let one_of_courses: Vec<Vec<&'a Course<'a>>> = subjects
+    .iter()
+    .flat_map(|subject| &subject.courses)
+    .map(|one_of_course| one_of_course.iter().collect::<Vec<&'a Course<'a>>>())
+    .collect();
+
+  let timetables: Vec<Vec<&'a Course<'a>>> = one_of_courses
+    .iter()
+    .map(|x| x.as_slice())
+    .collect::<Vec<&[&'a Course<'a>]>>()
+    .cart_prod()
+    .map(|cp| {
+      cp.iter()
+        .map(|&&course| course)
+        .collect::<Vec<&'a Course<'a>>>()
+    })
+    .collect();
+
+  timetables
+}
+
 fn main() {
   let subjects = sample_data::get_subjects();
-  let timetables = generate_combinations(subjects);
-  write_timetables(timetables);
+  let timetables = generate_timetables(&subjects);
+  save_timetables(timetables);
 }

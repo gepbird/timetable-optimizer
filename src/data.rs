@@ -10,7 +10,7 @@ pub struct Subject<'a> {
 }
 
 pub type OneOfCourse<'a> = Vec<Course<'a>>;
-pub type Timetable<'a> = Vec<Course<'a>>;
+pub type Timetable<'a> = Vec<&'a Course<'a>>;
 
 #[derive(Debug, Clone, Serialize)]
 pub struct Course<'a> {
