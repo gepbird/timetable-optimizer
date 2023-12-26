@@ -149,7 +149,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             },
           },
           Course {
-            code: "BMaths_gy_02",
+            code: "BMaths_Gy_02",
             course_type: CourseType::Practice,
             enrollment: Enrollment {
               people_joined: 29,
@@ -167,7 +167,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             },
           },
           Course {
-            code: "BMaths_gy_03",
+            code: "BMaths_Gy_03",
             course_type: CourseType::Practice,
             enrollment: Enrollment {
               people_joined: 24,
