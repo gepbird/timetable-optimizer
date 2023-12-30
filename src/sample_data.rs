@@ -1,5 +1,5 @@
-use crate::data::{Course, CourseType, Enrollment, Occurence, Subject, WeekDay, Weeks};
-use chrono::NaiveTime;
+use crate::data::{Course, CourseType, Enrollment, Occurence, Subject, Weeks};
+use chrono::{NaiveTime, Weekday};
 
 fn time(hours: u32, minutes: u32) -> NaiveTime {
   NaiveTime::from_hms_opt(hours, minutes, 0).unwrap()
@@ -25,7 +25,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
           language: "English",
           occurence: Occurence {
             weeks: Weeks::Every,
-            week_day: WeekDay::Wednesday,
+            week_day: Weekday::Wed,
             start_time: time(14, 25),
             end_time: time(16, 5),
           },
@@ -44,7 +44,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Odd,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(16, 15),
               end_time: time(17, 50),
             },
@@ -62,7 +62,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Even,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(16, 15),
               end_time: time(17, 50),
             },
@@ -80,7 +80,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Odd,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(17, 55),
               end_time: time(19, 30),
             },
@@ -98,7 +98,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Even,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(17, 55),
               end_time: time(19, 30),
             },
@@ -124,7 +124,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
           language: "English",
           occurence: Occurence {
             weeks: Weeks::Every,
-            week_day: WeekDay::Monday,
+            week_day: Weekday::Mon,
             start_time: time(8, 55),
             end_time: time(10, 35),
           },
@@ -143,7 +143,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Monday,
+              week_day: Weekday::Mon,
               start_time: time(10, 45),
               end_time: time(12, 25),
             },
@@ -161,7 +161,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Thursday,
+              week_day: Weekday::Thu,
               start_time: time(8, 0),
               end_time: time(9, 45),
             },
@@ -179,7 +179,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(10, 45),
               end_time: time(12, 25),
             },
@@ -205,7 +205,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
           language: "English",
           occurence: Occurence {
             weeks: Weeks::Every,
-            week_day: WeekDay::Friday,
+            week_day: Weekday::Fri,
             start_time: time(10, 45),
             end_time: time(12, 25),
           },
@@ -223,7 +223,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
           language: "English",
           occurence: Occurence {
             weeks: Weeks::Every,
-            week_day: WeekDay::Friday,
+            week_day: Weekday::Fri,
             start_time: time(10, 45),
             end_time: time(12, 25),
           },
@@ -247,7 +247,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
         language: "English",
         occurence: Occurence {
           weeks: Weeks::Every,
-          week_day: WeekDay::Friday,
+          week_day: Weekday::Fri,
           start_time: time(9, 50),
           end_time: time(10, 35),
         },
@@ -271,7 +271,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
           language: "English",
           occurence: Occurence {
             weeks: Weeks::Every,
-            week_day: WeekDay::Tuesday,
+            week_day: Weekday::Tue,
             start_time: time(14, 25),
             end_time: time(15, 10),
           },
@@ -290,7 +290,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(11, 40),
               end_time: time(14, 15),
             },
@@ -308,7 +308,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Thursday,
+              week_day: Weekday::Thu,
               start_time: time(11, 40),
               end_time: time(14, 15),
             },
@@ -326,7 +326,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Monday,
+              week_day: Weekday::Mon,
               start_time: time(13, 30),
               end_time: time(16, 05),
             },
@@ -344,7 +344,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Thursday,
+              week_day: Weekday::Thu,
               start_time: time(9, 50),
               end_time: time(12, 25),
             },
@@ -370,7 +370,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
           language: "English",
           occurence: Occurence {
             weeks: Weeks::Every,
-            week_day: WeekDay::Tuesday,
+            week_day: Weekday::Tue,
             start_time: time(8, 00),
             end_time: time(9, 40),
           },
@@ -389,7 +389,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Tuesday,
+              week_day: Weekday::Tue,
               start_time: time(9, 50),
               end_time: time(12, 25),
             },
@@ -407,7 +407,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Wednesday,
+              week_day: Weekday::Wed,
               start_time: time(11, 40),
               end_time: time(14, 15),
             },
@@ -425,7 +425,7 @@ pub fn get_subjects() -> Vec<Subject<'static>> {
             language: "English",
             occurence: Occurence {
               weeks: Weeks::Every,
-              week_day: WeekDay::Thursday,
+              week_day: Weekday::Thu,
               start_time: time(13, 30),
               end_time: time(16, 5),
             },

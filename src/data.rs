@@ -1,4 +1,4 @@
-use chrono::NaiveTime;
+use chrono::{NaiveTime, Weekday};
 use serde::Serialize;
 
 #[derive(Debug, Clone, Serialize)]
@@ -40,7 +40,7 @@ pub struct Enrollment {
 #[derive(Debug, Clone, Serialize)]
 pub struct Occurence {
   pub weeks: Weeks,
-  pub week_day: WeekDay,
+  pub week_day: Weekday,
   pub start_time: NaiveTime,
   pub end_time: NaiveTime,
 }
@@ -51,16 +51,4 @@ pub enum Weeks {
   Every,
   Even,
   Odd,
-}
-
-#[derive(Debug, Clone, Serialize)]
-#[allow(dead_code)]
-pub enum WeekDay {
-  Monday = 0,
-  Tuesday = 1,
-  Wednesday = 2,
-  Thursday = 3,
-  Friday = 4,
-  Saturday = 5,
-  Sunday = 6,
 }
