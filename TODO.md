@@ -5,7 +5,14 @@ A CLI application with hard-coded dummy subject information. A timetable output 
 ## Tasks:
 
 - [x] Define data structures for subjects and courses
-- [x] Hard code subject info
+- [ ] Get input subjects
+  - [x] Hard code subject info
+  - [ ] Read subject info from JSON
+  - [ ] Use Neptun API
 - [ ] Define filtering rules, put them in data structures
+  - [ ] Exclude teachers
 - [ ] Implement a filtering algorithm
+  - [x] Basic filtering where all criteria has to be met
+  - [ ] Logical operators
 - [x] Generate timetables
+- [ ] Visualize timetables in a PNG
