@@ -52,7 +52,7 @@ Example: 16:00
 
 ### excluded_weekday
 
-Passess when there are no courses on the specified weekday.
+Passes when there are no courses on the specified weekday.
 
 Format: chrono Weekday
 
@@ -62,7 +62,7 @@ Example: wed
 
 ### max_gap_minutes_between_courses
 
-Passess when there are no two consecutive courses on any day, that have more minutes between them than the specified value.
+Passes when there are no two consecutive courses on any day, that have more minutes between them than the specified value.
 
 Format: integer
 
