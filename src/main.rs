@@ -1,20 +1,14 @@
-use filter::Filter;
-use permutator::CartesianProduct;
-use std::fs;
-use std::fs::File;
-use std::io::stdin;
-use std::io::stdout;
-use std::io::Write;
+use std::fs::{self, File};
+use std::io::{self, Write};
 
-use data::Course;
-use data::Subject;
-use data::Timetable;
+use data::{Course, Subject, Timetable};
+use permutator::CartesianProduct;
 
 mod data;
 mod filter;
 mod sample_data;
 
-fn save_timetables(timetables: Vec<&Vec<&Course>>) {
+fn save_timetables(timetables: Vec<Vec<&Course>>) {
   let out_dir = "out";
   fs::remove_dir_all(out_dir).ok();
   fs::create_dir_all(out_dir).unwrap();
@@ -58,19 +52,11 @@ fn main() {
 
   loop {
     print!("Enter filter: ");
-    stdout().flush().unwrap();
+    io::stdout().flush().unwrap();
     let mut input = String::new();
-    stdin().read_line(&mut input).unwrap();
-    let filters: Vec<Filter> = input
-      .trim()
-      .split(' ')
-      .filter(|spec| !spec.is_empty())
-      .map(|spec| Filter::parse_filter(spec))
-      .collect();
-    let filtered_timetables: Vec<&Timetable> = timetables
-      .iter()
-      .filter(|timetable| filters.iter().all(|filter| filter.filter(timetable)))
-      .collect();
+    io::stdin().read_line(&mut input).unwrap();
+    let filters = filter::parse_filters(&input);
+    let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
     save_timetables(filtered_timetables);
   }
