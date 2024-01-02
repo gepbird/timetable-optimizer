@@ -4,6 +4,7 @@ pub mod excluded_weekday;
 pub mod max_end_time;
 pub mod max_gap_between_courses;
 pub mod min_start_time;
+pub mod exclude_teacher;
 
 pub trait Filter {
   fn filter(&self, timetable: &crate::data::Timetable) -> bool;
@@ -26,6 +27,7 @@ fn parse_filter(spec: &str) -> Box<dyn Filter> {
     max_end_time::try_parse,
     excluded_weekday::try_parse,
     max_gap_between_courses::try_parse,
+    exclude_teacher::try_parse,
   ];
 
   parsers

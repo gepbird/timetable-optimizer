@@ -67,3 +67,13 @@ Passess when there are no two consecutive courses on any day, that have more min
 Format: integer
 
 Example: 30
+
+### exclude_teacher
+
+Passes when none of the courses' teachers' names includes the specified name.
+
+Format: string
+
+Example: John
+
+Example: Jo

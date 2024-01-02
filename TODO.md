@@ -10,7 +10,8 @@ A CLI application with hard-coded dummy subject information. A timetable output 
   - [ ] Read subject info from JSON
   - [ ] Use Neptun API
 - [ ] Define filtering rules, put them in data structures
-  - [ ] Exclude teachers
+  - [x] Exclude teachers
+  - Figure out more filters
 - [ ] Implement a filtering algorithm
   - [x] Basic filtering where all criteria has to be met
   - [ ] Logical operators
