@@ -1,0 +1,444 @@
+[
+  {
+    "name": "Electronics Basic",
+    "code": "NKXEAIEBNF",
+    "credits": 5,
+    "courses": [
+      [
+        {
+          "code": "EB_EA",
+          "course_type": "Lecture",
+          "enrollment": {
+            "people_joined": 91,
+            "people_queue": 0,
+            "people_limit": 100
+          },
+          "location": "BA.F.05",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Wed",
+            "start_time": "14:25:00",
+            "end_time": "16:05:00"
+          }
+        }
+      ],
+      [
+        {
+          "code": "EB_LA_01",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 22,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.2.18",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Odd",
+            "week_day": "Wed",
+            "start_time": "16:15:00",
+            "end_time": "17:50:00"
+          }
+        },
+        {
+          "code": "EB_LA_02",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 24,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.2.18",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Even",
+            "week_day": "Wed",
+            "start_time": "16:15:00",
+            "end_time": "17:50:00"
+          }
+        },
+        {
+          "code": "EB_LA_03",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 23,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.2.18",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Odd",
+            "week_day": "Wed",
+            "start_time": "17:55:00",
+            "end_time": "19:30:00"
+          }
+        },
+        {
+          "code": "EB_LA_04",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 21,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.2.18",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Even",
+            "week_day": "Wed",
+            "start_time": "17:55:00",
+            "end_time": "19:30:00"
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "name": "Basic Mathematics",
+    "code": "NMXMA1EBNF",
+    "credits": 6,
+    "courses": [
+      [
+        {
+          "code": "BMaths_EA",
+          "course_type": "Lecture",
+          "enrollment": {
+            "people_joined": 84,
+            "people_queue": 0,
+            "people_limit": 93
+          },
+          "location": "BA.F.08",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Mon",
+            "start_time": "08:55:00",
+            "end_time": "10:35:00"
+          }
+        }
+      ],
+      [
+        {
+          "code": "BMaths_Gy_01",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 31,
+            "people_queue": 0,
+            "people_limit": 33
+          },
+          "location": "BA.F.03",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Mon",
+            "start_time": "10:45:00",
+            "end_time": "12:25:00"
+          }
+        },
+        {
+          "code": "BMaths_Gy_02",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 29,
+            "people_queue": 0,
+            "people_limit": 31
+          },
+          "location": "BA.F.03",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Thu",
+            "start_time": "08:00:00",
+            "end_time": "09:45:00"
+          }
+        },
+        {
+          "code": "BMaths_Gy_03",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 24,
+            "people_queue": 0,
+            "people_limit": 30
+          },
+          "location": "BA.F.06",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Wed",
+            "start_time": "10:45:00",
+            "end_time": "12:25:00"
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "name": "Learning Methodology",
+    "code": "NBXTM1EBNF",
+    "credits": 6,
+    "courses": [
+      [
+        {
+          "code": "LMet_EA",
+          "course_type": "Lecture",
+          "enrollment": {
+            "people_joined": 81,
+            "people_queue": 0,
+            "people_limit": 89
+          },
+          "location": "BA.F.05",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Fri",
+            "start_time": "10:45:00",
+            "end_time": "12:25:00"
+          }
+        }
+      ],
+      [
+        {
+          "code": "LMet_Gy",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 81,
+            "people_queue": 0,
+            "people_limit": 89
+          },
+          "location": "BA.F.05",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Fri",
+            "start_time": "10:45:00",
+            "end_time": "12:25:00"
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "name": "Mentoring",
+    "code": "NDIPT1EBNF",
+    "credits": 0,
+    "courses": [
+      [
+        {
+          "code": "Mentoring",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 82,
+            "people_queue": 0,
+            "people_limit": 90
+          },
+          "location": "BA.F.05",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Fri",
+            "start_time": "09:50:00",
+            "end_time": "10:35:00"
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "name": "Problemsolving using programming",
+    "code": "NSXPP1EBNF",
+    "credits": 6,
+    "courses": [
+      [
+        {
+          "code": "PMP_EA_ENG",
+          "course_type": "Lecture",
+          "enrollment": {
+            "people_joined": 82,
+            "people_queue": 0,
+            "people_limit": 91
+          },
+          "location": "BA.1.32.Audmax",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Tue",
+            "start_time": "14:25:00",
+            "end_time": "15:10:00"
+          }
+        }
+      ],
+      [
+        {
+          "code": "PMP_LA_01_ENG",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 21,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BC.2.201",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Wed",
+            "start_time": "11:40:00",
+            "end_time": "14:15:00"
+          }
+        },
+        {
+          "code": "PMP_LA_02_ENG",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 17,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.2.15",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Thu",
+            "start_time": "11:40:00",
+            "end_time": "14:15:00"
+          }
+        },
+        {
+          "code": "PMP_LA_03_ENG",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 24,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.1.14",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Mon",
+            "start_time": "13:30:00",
+            "end_time": "16:05:00"
+          }
+        },
+        {
+          "code": "PMP_LA_04_ENG",
+          "course_type": "Laboratory",
+          "enrollment": {
+            "people_joined": 20,
+            "people_queue": 0,
+            "people_limit": 24
+          },
+          "location": "BA.1.14",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Thu",
+            "start_time": "09:50:00",
+            "end_time": "12:25:00"
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "name": "Mathematical Foundations of Informatics",
+    "code": "NMXIMAEBNF",
+    "credits": 6,
+    "courses": [
+      [
+        {
+          "code": "MFI_EA",
+          "course_type": "Lecture",
+          "enrollment": {
+            "people_joined": 86,
+            "people_queue": 0,
+            "people_limit": 94
+          },
+          "location": "BA.F.05",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Tue",
+            "start_time": "08:00:00",
+            "end_time": "09:40:00"
+          }
+        }
+      ],
+      [
+        {
+          "code": "MFI_Gy_01",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 31,
+            "people_queue": 0,
+            "people_limit": 33
+          },
+          "location": "BA.F.03",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Tue",
+            "start_time": "09:50:00",
+            "end_time": "12:25:00"
+          }
+        },
+        {
+          "code": "MFI_Gy_02",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 29,
+            "people_queue": 0,
+            "people_limit": 32
+          },
+          "location": "BC.4.402",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Wed",
+            "start_time": "11:40:00",
+            "end_time": "14:15:00"
+          }
+        },
+        {
+          "code": "MFI_Gy_03",
+          "course_type": "Practice",
+          "enrollment": {
+            "people_joined": 26,
+            "people_queue": 0,
+            "people_limit": 33
+          },
+          "location": "BC.4.402",
+          "teacher": "John Doe",
+          "language": "English",
+          "occurence": {
+            "weeks": "Every",
+            "week_day": "Thu",
+            "start_time": "13:30:00",
+            "end_time": "16:05:00"
+          }
+        }
+      ]
+    ]
+  }
+]

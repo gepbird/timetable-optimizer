@@ -24,22 +24,22 @@ fn save_timetables(timetables: Vec<Vec<&Course>>) {
   }
 }
 
-pub fn generate_timetables<'a>(subjects: &'a Vec<Subject<'a>>) -> Vec<Timetable> {
-  let one_of_courses: Vec<Vec<&'a Course<'a>>> = subjects
+pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>> {
+  let one_of_courses: Vec<Vec<&'a Course>> = subjects
     .iter()
     .flat_map(|subject| &subject.courses)
-    .map(|one_of_course| one_of_course.iter().collect::<Vec<&'a Course<'a>>>())
+    .map(|one_of_course| one_of_course.iter().collect::<Vec<&'a Course>>())
     .collect();
 
-  let timetables: Vec<Vec<&'a Course<'a>>> = one_of_courses
+  let timetables: Vec<Vec<&'a Course>> = one_of_courses
     .iter()
     .map(|x| x.as_slice())
-    .collect::<Vec<&[&'a Course<'a>]>>()
+    .collect::<Vec<&[&'a Course]>>()
     .cart_prod()
     .map(|cp| {
-      cp.iter()
-        .map(|&&course| course)
-        .collect::<Vec<&'a Course<'a>>>()
+      cp.into_iter()
+        .map(|&course| course)
+        .collect::<Vec<&'a Course>>()
     })
     .collect();
 
