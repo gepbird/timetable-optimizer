@@ -2,6 +2,7 @@ use std::fs::{self, File};
 use std::io::{self, Write};
 
 use data::{Course, Subject, Timetable};
+use itertools::Itertools;
 use permutator::CartesianProduct;
 
 mod data;
@@ -10,16 +11,26 @@ mod sample_data;
 
 fn save_timetables(timetables: Vec<Vec<&Course>>) {
   let out_dir = "out";
+  let full_dir = format!("{out_dir}/full");
+  let codes_dir = format!("{out_dir}/course-codes");
   fs::remove_dir_all(out_dir).ok();
-  fs::create_dir_all(out_dir).unwrap();
+  fs::create_dir_all(&full_dir).unwrap();
+  fs::create_dir_all(&codes_dir).unwrap();
 
   for (index, timetable) in timetables.iter().enumerate() {
-    let file_name = format!("{out_dir}/timetable_{:04}.json", index);
     let serialized_timetable = serde_json::to_string_pretty(timetable).unwrap();
-
-    File::create(file_name)
+    File::create(format!("{full_dir}/timetable_{:04}.json", index))
       .unwrap()
       .write_all(serialized_timetable.as_bytes())
+      .unwrap();
+
+    let course_codes = timetable
+      .into_iter()
+      .map(|course| course.code.clone())
+      .join("\n");
+    File::create(format!("{codes_dir}/timetable_{:04}.txt", index))
+      .unwrap()
+      .write_all(course_codes.as_bytes())
       .unwrap();
   }
 }
