@@ -13,9 +13,14 @@ fn save_timetables(timetables: Vec<Vec<&Course>>) {
   let out_dir = "out";
   let full_dir = format!("{out_dir}/full");
   let codes_dir = format!("{out_dir}/course-codes");
-  fs::remove_dir_all(out_dir).ok();
-  fs::create_dir_all(&full_dir).unwrap();
-  fs::create_dir_all(&codes_dir).unwrap();
+  fs::create_dir_all(out_dir).unwrap();
+
+  for subdirectory in vec![&full_dir, &codes_dir]{
+    fs::create_dir_all(&subdirectory).ok();
+    for entry in fs::read_dir(subdirectory).unwrap() {
+      fs::remove_file(entry.unwrap().path()).unwrap();
+    }
+  }
 
   for (index, timetable) in timetables.iter().enumerate() {
     let serialized_timetable = serde_json::to_string_pretty(timetable).unwrap();
