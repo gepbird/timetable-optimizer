@@ -16,6 +16,6 @@ impl Filter for ExcludedWeekDayFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
     timetable
       .iter()
-      .all(|course| course.occurence.week_day != self.0)
+      .all(|course| course.occurrence.week_day != self.0)
   }
 }

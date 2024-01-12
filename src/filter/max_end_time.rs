@@ -16,6 +16,6 @@ impl Filter for MaxEndTimeFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
     timetable
       .iter()
-      .all(|course| course.occurence.end_time <= self.0)
+      .all(|course| course.occurrence.end_time <= self.0)
   }
 }

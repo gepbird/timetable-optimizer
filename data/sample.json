@@ -16,7 +16,7 @@
           "location": "BA.F.05",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Wed",
             "start_time": "14:25:00",
@@ -36,7 +36,7 @@
           "location": "BA.2.18",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Odd",
             "week_day": "Wed",
             "start_time": "16:15:00",
@@ -54,7 +54,7 @@
           "location": "BA.2.18",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Even",
             "week_day": "Wed",
             "start_time": "16:15:00",
@@ -72,7 +72,7 @@
           "location": "BA.2.18",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Odd",
             "week_day": "Wed",
             "start_time": "17:55:00",
@@ -90,7 +90,7 @@
           "location": "BA.2.18",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Even",
             "week_day": "Wed",
             "start_time": "17:55:00",
@@ -117,7 +117,7 @@
           "location": "BA.F.08",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Mon",
             "start_time": "08:55:00",
@@ -137,7 +137,7 @@
           "location": "BA.F.03",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Mon",
             "start_time": "10:45:00",
@@ -155,7 +155,7 @@
           "location": "BA.F.03",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Thu",
             "start_time": "08:00:00",
@@ -173,7 +173,7 @@
           "location": "BA.F.06",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Wed",
             "start_time": "10:45:00",
@@ -200,7 +200,7 @@
           "location": "BA.F.05",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Fri",
             "start_time": "10:45:00",
@@ -220,7 +220,7 @@
           "location": "BA.F.05",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Fri",
             "start_time": "10:45:00",
@@ -247,7 +247,7 @@
           "location": "BA.F.05",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Fri",
             "start_time": "09:50:00",
@@ -274,7 +274,7 @@
           "location": "BA.1.32.Audmax",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Tue",
             "start_time": "14:25:00",
@@ -294,7 +294,7 @@
           "location": "BC.2.201",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Wed",
             "start_time": "11:40:00",
@@ -312,7 +312,7 @@
           "location": "BA.2.15",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Thu",
             "start_time": "11:40:00",
@@ -330,7 +330,7 @@
           "location": "BA.1.14",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Mon",
             "start_time": "13:30:00",
@@ -348,7 +348,7 @@
           "location": "BA.1.14",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Thu",
             "start_time": "09:50:00",
@@ -375,7 +375,7 @@
           "location": "BA.F.05",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Tue",
             "start_time": "08:00:00",
@@ -395,7 +395,7 @@
           "location": "BA.F.03",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Tue",
             "start_time": "09:50:00",
@@ -413,7 +413,7 @@
           "location": "BC.4.402",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Wed",
             "start_time": "11:40:00",
@@ -431,7 +431,7 @@
           "location": "BC.4.402",
           "teacher": "John Doe",
           "language": "English",
-          "occurence": {
+          "occurrence": {
             "weeks": "Every",
             "week_day": "Thu",
             "start_time": "13:30:00",

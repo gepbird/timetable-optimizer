@@ -15,7 +15,7 @@ pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
 impl Filter for MinStartTimeFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
     timetable
-      .iter()
-      .all(|course| course.occurence.start_time >= self.0)
+      .into_iter()
+      .all(|course| course.occurrence.start_time >= self.0)
   }
 }

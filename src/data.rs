@@ -20,7 +20,7 @@ pub struct Course {
   pub location: String,
   pub teacher: String,
   pub language: String,
-  pub occurence: Occurence,
+  pub occurrence: Occurrence,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,7 +38,7 @@ pub struct Enrollment {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Occurence {
+pub struct Occurrence {
   pub weeks: Weeks,
   pub week_day: Weekday,
   pub start_time: NaiveTime,
