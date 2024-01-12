@@ -28,8 +28,11 @@ pub struct Course {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum CourseType {
+  #[serde(alias = "Elmélet")]
   Lecture,
+  #[serde(alias = "Labor")]
   Laboratory,
+  #[serde(alias = "Gyakorlat")]
   Practice,
 }
 

@@ -6,6 +6,7 @@ use itertools::Itertools;
 use permutator::CartesianProduct;
 
 mod data;
+mod excel;
 mod filter;
 mod sample_data;
 
@@ -15,7 +16,7 @@ fn save_timetables(timetables: Vec<Vec<&Course>>) {
   let codes_dir = format!("{out_dir}/course-codes");
   fs::create_dir_all(out_dir).unwrap();
 
-  for subdirectory in vec![&full_dir, &codes_dir]{
+  for subdirectory in vec![&full_dir, &codes_dir] {
     fs::create_dir_all(&subdirectory).ok();
     for entry in fs::read_dir(subdirectory).unwrap() {
       fs::remove_file(entry.unwrap().path()).unwrap();
