@@ -17,4 +17,6 @@ A CLI application with hard-coded dummy subject information. A timetable output 
   - [ ] Logical operators
 - [x] Generate timetables
 - [ ] Visualize timetables in a PNG
+- [ ] Show all courses in a PNG
 - [x] Output course codes
+- [ ] Support odd,even,every weeks for filters

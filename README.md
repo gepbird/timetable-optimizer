@@ -77,3 +77,11 @@ Format: string
 Example: John
 
 Example: Jo
+
+### no_course_overlap
+
+Passes when there are no overlapping courses.
+
+Format: none
+
+Example (full): no_course_overlap=
