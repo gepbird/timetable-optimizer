@@ -1,5 +1,5 @@
 use chrono::{NaiveTime, Weekday};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Subject {
@@ -20,6 +20,9 @@ pub struct Course {
   pub location: String,
   pub teacher: String,
   pub language: String,
+  pub site: String,
+  pub comment: String,
+  pub description: String,
   pub occurrence: Occurrence,
 }
 
