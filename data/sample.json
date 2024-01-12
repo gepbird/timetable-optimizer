@@ -21,7 +21,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "14:25:00",
             "end_time": "16:05:00"
           }
@@ -44,7 +44,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Odd",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "16:15:00",
             "end_time": "17:50:00"
           }
@@ -65,7 +65,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Even",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "16:15:00",
             "end_time": "17:50:00"
           }
@@ -86,7 +86,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Odd",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "17:55:00",
             "end_time": "19:30:00"
           }
@@ -107,7 +107,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Even",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "17:55:00",
             "end_time": "19:30:00"
           }
@@ -137,7 +137,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Mon",
+            "weekday": "Mon",
             "start_time": "08:55:00",
             "end_time": "10:35:00"
           }
@@ -160,7 +160,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Mon",
+            "weekday": "Mon",
             "start_time": "10:45:00",
             "end_time": "12:25:00"
           }
@@ -181,7 +181,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Thu",
+            "weekday": "Thu",
             "start_time": "08:00:00",
             "end_time": "09:45:00"
           }
@@ -202,7 +202,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "10:45:00",
             "end_time": "12:25:00"
           }
@@ -232,7 +232,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Fri",
+            "weekday": "Fri",
             "start_time": "10:45:00",
             "end_time": "12:25:00"
           }
@@ -255,7 +255,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Fri",
+            "weekday": "Fri",
             "start_time": "10:45:00",
             "end_time": "12:25:00"
           }
@@ -285,7 +285,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Fri",
+            "weekday": "Fri",
             "start_time": "09:50:00",
             "end_time": "10:35:00"
           }
@@ -315,7 +315,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Tue",
+            "weekday": "Tue",
             "start_time": "14:25:00",
             "end_time": "15:10:00"
           }
@@ -338,7 +338,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "11:40:00",
             "end_time": "14:15:00"
           }
@@ -359,7 +359,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Thu",
+            "weekday": "Thu",
             "start_time": "11:40:00",
             "end_time": "14:15:00"
           }
@@ -380,7 +380,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Mon",
+            "weekday": "Mon",
             "start_time": "13:30:00",
             "end_time": "16:05:00"
           }
@@ -401,7 +401,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Thu",
+            "weekday": "Thu",
             "start_time": "09:50:00",
             "end_time": "12:25:00"
           }
@@ -431,7 +431,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Tue",
+            "weekday": "Tue",
             "start_time": "08:00:00",
             "end_time": "09:40:00"
           }
@@ -454,7 +454,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Tue",
+            "weekday": "Tue",
             "start_time": "09:50:00",
             "end_time": "12:25:00"
           }
@@ -475,7 +475,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Wed",
+            "weekday": "Wed",
             "start_time": "11:40:00",
             "end_time": "14:15:00"
           }
@@ -496,7 +496,7 @@
           "description": "",
           "occurrence": {
             "weeks": "Every",
-            "week_day": "Thu",
+            "weekday": "Thu",
             "start_time": "13:30:00",
             "end_time": "16:05:00"
           }

@@ -43,7 +43,7 @@ pub struct Enrollment {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Occurrence {
   pub weeks: Weeks,
-  pub week_day: Weekday,
+  pub weekday: Weekday,
   pub start_time: NaiveTime,
   pub end_time: NaiveTime,
 }
