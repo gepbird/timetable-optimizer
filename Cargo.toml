@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+cached = "0.47.0"
 calamine = "0.23.1"
 chrono = { version = "0.4.31", features = ["serde"] }
 image = "0.24.7"
