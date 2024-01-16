@@ -2,6 +2,7 @@ use std::fs::{self, File};
 use std::io::{self, Write};
 
 use data::{Course, Subject, Timetable};
+use export::image::save_timetable_image;
 use itertools::Itertools;
 use permutator::CartesianProduct;
 
@@ -9,11 +10,13 @@ mod data;
 mod excel;
 mod filter;
 mod sample_data;
+mod export;
 
 fn save_timetables(timetables: Vec<Vec<&Course>>) {
   let out_dir = "out";
   let full_dir = format!("{out_dir}/full");
   let codes_dir = format!("{out_dir}/course-codes");
+  let images_dir = format!("{out_dir}/images");
   fs::create_dir_all(out_dir).unwrap();
 
   for subdirectory in vec![&full_dir, &codes_dir] {
@@ -38,6 +41,11 @@ fn save_timetables(timetables: Vec<Vec<&Course>>) {
       .unwrap()
       .write_all(course_codes.as_bytes())
       .unwrap();
+
+    save_timetable_image(
+      timetable,
+      format!("{images_dir}/timetable_{:04}.png", index),
+    );
   }
 }
 
