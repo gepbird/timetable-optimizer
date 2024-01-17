@@ -1,18 +1,16 @@
-use std::fs::{self, File};
+use std::fs::{self};
 use std::io::{self, Write};
 
 use data::{Course, Subject, Timetable};
-use export::image::save_timetable_image;
-use itertools::Itertools;
 use permutator::CartesianProduct;
 
 mod data;
 mod excel;
+mod export;
 mod filter;
 mod sample_data;
-mod export;
 
-fn save_timetables(timetables: Vec<Vec<&Course>>) {
+fn save_timetables(timetables: Vec<Timetable>) {
   let out_dir = "out";
   let full_dir = format!("{out_dir}/full");
   let codes_dir = format!("{out_dir}/course-codes");
@@ -27,24 +25,14 @@ fn save_timetables(timetables: Vec<Vec<&Course>>) {
   }
 
   for (index, timetable) in timetables.iter().enumerate() {
-    let serialized_timetable = serde_json::to_string_pretty(timetable).unwrap();
-    File::create(format!("{full_dir}/timetable_{:04}.json", index))
-      .unwrap()
-      .write_all(serialized_timetable.as_bytes())
-      .unwrap();
-
-    let course_codes = timetable
-      .into_iter()
-      .map(|course| course.code.clone())
-      .join("\n");
-    File::create(format!("{codes_dir}/timetable_{:04}.txt", index))
-      .unwrap()
-      .write_all(course_codes.as_bytes())
-      .unwrap();
-
-    save_timetable_image(
+    export::json::save_timetable_json(timetable, format!("{full_dir}/timetable_{:04}.json", index));
+    export::course_code::save_course_codes(
       timetable,
-      format!("{images_dir}/timetable_{:04}.png", index),
+      format!("{codes_dir}/timetable_{:04}.txt", index),
+    );
+    export::image::save_timetable_image(
+      timetable,
+      format!("{images_dir}/timetable_{:04}.bmp", index),
     );
   }
 }
