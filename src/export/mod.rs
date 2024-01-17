@@ -1,12 +1,16 @@
 use std::fs;
 
+use rayon::iter::{IndexedParallelIterator, IntoParallelRefIterator, ParallelIterator};
+
 use crate::data::Timetable;
 
 pub mod course_code;
 pub mod image;
 pub mod json;
 
-pub fn save_timetables(timetables: Vec<Timetable>) {
+pub fn save_timetables_parallel(timetables: Vec<Timetable>) {
+  let export_time = std::time::Instant::now();
+
   let out_dir = "out";
   fs::create_dir_all(out_dir).unwrap();
 
@@ -20,10 +24,15 @@ pub fn save_timetables(timetables: Vec<Timetable>) {
     }
   }
 
-  for (index, timetable) in timetables.iter().enumerate() {
-    let name = format!("timetable_{index:04}");
-    json::save_timetable_json(timetable, format!("{full_dir}/{name}.json"));
-    course_code::save_course_codes(timetable, format!("{codes_dir}/{name}.txt"));
-    image::save_timetable_image(timetable, format!("{images_dir}/{name}.bmp"));
-  }
+  timetables
+    .par_iter()
+    .enumerate()
+    .for_each(|(index, timetable)| {
+      let name = format!("timetable_{index:04}");
+      json::save_timetable_json(timetable, format!("{full_dir}/{name}.json"));
+      course_code::save_course_codes(timetable, format!("{codes_dir}/{name}.txt"));
+      image::save_timetable_image(timetable, format!("{images_dir}/{name}.bmp"));
+    });
+
+  dbg!(export_time.elapsed());
 }

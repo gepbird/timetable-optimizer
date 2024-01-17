@@ -43,6 +43,6 @@ fn main() {
     let filters = filter::parse_filters(&input);
     let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
-    export::save_timetables(filtered_timetables);
+    export::save_timetables_parallel(filtered_timetables);
   }
 }

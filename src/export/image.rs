@@ -27,8 +27,6 @@ const DARK_GRAY: Rgba<u8> = Rgba([64, 64, 64, 255]);
 const BLACK: Rgba<u8> = Rgba([0, 0, 0, 255]);
 
 pub fn save_timetable_image(timetable: &Timetable, file_path: String) {
-  let draw_time = std::time::Instant::now();
-
   let day_start = NaiveTime::from_hms_opt(8, 0, 0).unwrap();
   let day_end = NaiveTime::from_hms_opt(20, 0, 0).unwrap();
   let day_length = day_end - day_start;
@@ -39,11 +37,7 @@ pub fn save_timetable_image(timetable: &Timetable, file_path: String) {
   let mut img = draw_timetable_base_cached(canvas_height, hours, day_start);
   draw_courses(timetable, day_start, &mut img);
 
-  dbg!(draw_time.elapsed());
-
-  let save_time = std::time::Instant::now();
   img.save(file_path.as_str()).unwrap();
-  dbg!(save_time.elapsed());
 }
 
 #[cached]
