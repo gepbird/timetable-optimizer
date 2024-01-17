@@ -32,7 +32,8 @@ pub fn save_timetables_parallel(timetables: Vec<Timetable>) {
       let name = format!("timetable_{index:04}");
       json::save_timetable_json(timetable, format!("{full_dir}/{name}.json"));
       course_code::save_course_codes(timetable, format!("{codes_dir}/{name}.txt"));
-      image::save_timetable_image(timetable, format!("{images_dir}/{name}.bmp"));
+      let image_extension = if cfg!(debug_assertions) { "bmp" } else { "png" };
+      image::save_timetable_image(timetable, format!("{images_dir}/{name}.{image_extension}"));
       progress_bar.inc(1);
     });
 
