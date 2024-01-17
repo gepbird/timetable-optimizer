@@ -1,5 +1,6 @@
 use std::fs;
 
+use indicatif::ProgressBar;
 use rayon::iter::{IndexedParallelIterator, IntoParallelRefIterator, ParallelIterator};
 
 use crate::data::Timetable;
@@ -9,8 +10,6 @@ pub mod image;
 pub mod json;
 
 pub fn save_timetables_parallel(timetables: Vec<Timetable>) {
-  let export_time = std::time::Instant::now();
-
   let out_dir = "out";
   fs::create_dir_all(out_dir).unwrap();
 
@@ -24,6 +23,8 @@ pub fn save_timetables_parallel(timetables: Vec<Timetable>) {
     }
   }
 
+  let progress_bar = ProgressBar::new(timetables.len() as u64);
+
   timetables
     .par_iter()
     .enumerate()
@@ -32,7 +33,8 @@ pub fn save_timetables_parallel(timetables: Vec<Timetable>) {
       json::save_timetable_json(timetable, format!("{full_dir}/{name}.json"));
       course_code::save_course_codes(timetable, format!("{codes_dir}/{name}.txt"));
       image::save_timetable_image(timetable, format!("{images_dir}/{name}.bmp"));
+      progress_bar.inc(1);
     });
 
-  dbg!(export_time.elapsed());
+  progress_bar.finish();
 }
