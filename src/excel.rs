@@ -9,7 +9,7 @@ use crate::data::{Course, CourseType, Enrollment, Occurrence, Weeks};
 // an internal tool that converts Neptun's exported .xlsx into a .json
 // manual adjustions after json generation:
 // - categorize courses into one-of-courses
-// - fill out occurrence.weeks, default is just a placeholder
+// - fill out occurrence.weeks and subject_name, default is just a placeholder
 #[allow(dead_code)]
 pub fn process(filename: &str) {
   let courses = parse_courses(&format!("data/{filename}.xlsx"));
@@ -33,6 +33,7 @@ fn parse_course(row: &[DataType]) -> Course {
   let mut row_iter = row.iter();
   let cell = |r: &mut Iter<'_, DataType>| r.next().unwrap().as_string().unwrap();
 
+  let subject_name = "Placeholder subject".to_owned();
   let code = cell(&mut row_iter);
   let course_type_str = cell(&mut row_iter);
   let course_type: CourseType = serde_json::from_str(&format!("\"{course_type_str}\"")).unwrap();
@@ -47,6 +48,7 @@ fn parse_course(row: &[DataType]) -> Course {
   let description = cell(&mut row_iter);
 
   Course {
+    subject_name,
     code,
     course_type,
     enrollment,

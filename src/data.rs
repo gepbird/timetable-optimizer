@@ -14,6 +14,7 @@ pub type Timetable<'a> = Vec<&'a Course>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Course {
+  pub subject_name: String,
   pub code: String,
   pub course_type: CourseType,
   pub enrollment: Enrollment,

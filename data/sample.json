@@ -6,6 +6,7 @@
     "courses": [
       [
         {
+          "subject_name": "Electronics Basic",
           "code": "EB_EA",
           "course_type": "Lecture",
           "enrollment": {
@@ -29,6 +30,7 @@
       ],
       [
         {
+          "subject_name": "Electronics Basic",
           "code": "EB_LA_01",
           "course_type": "Laboratory",
           "enrollment": {
@@ -50,6 +52,7 @@
           }
         },
         {
+          "subject_name": "Electronics Basic",
           "code": "EB_LA_02",
           "course_type": "Laboratory",
           "enrollment": {
@@ -71,6 +74,7 @@
           }
         },
         {
+          "subject_name": "Electronics Basic",
           "code": "EB_LA_03",
           "course_type": "Laboratory",
           "enrollment": {
@@ -92,6 +96,7 @@
           }
         },
         {
+          "subject_name": "Electronics Basic",
           "code": "EB_LA_04",
           "course_type": "Laboratory",
           "enrollment": {
@@ -122,6 +127,7 @@
     "courses": [
       [
         {
+          "subject_name": "Basic Mathematics",
           "code": "BMaths_EA",
           "course_type": "Lecture",
           "enrollment": {
@@ -145,6 +151,7 @@
       ],
       [
         {
+          "subject_name": "Basic Mathematics",
           "code": "BMaths_Gy_01",
           "course_type": "Practice",
           "enrollment": {
@@ -166,6 +173,7 @@
           }
         },
         {
+          "subject_name": "Basic Mathematics",
           "code": "BMaths_Gy_02",
           "course_type": "Practice",
           "enrollment": {
@@ -187,6 +195,7 @@
           }
         },
         {
+          "subject_name": "Basic Mathematics",
           "code": "BMaths_Gy_03",
           "course_type": "Practice",
           "enrollment": {
@@ -217,6 +226,7 @@
     "courses": [
       [
         {
+          "subject_name": "Learning Methodology",
           "code": "LMet_EA",
           "course_type": "Lecture",
           "enrollment": {
@@ -240,6 +250,7 @@
       ],
       [
         {
+          "subject_name": "Learning Methodology",
           "code": "LMet_Gy",
           "course_type": "Practice",
           "enrollment": {
@@ -270,6 +281,7 @@
     "courses": [
       [
         {
+          "subject_name": "Mentoring",
           "code": "Mentoring",
           "course_type": "Practice",
           "enrollment": {
@@ -300,6 +312,7 @@
     "courses": [
       [
         {
+          "subject_name": "Problemsolving using programming",
           "code": "PMP_EA_ENG",
           "course_type": "Lecture",
           "enrollment": {
@@ -323,6 +336,7 @@
       ],
       [
         {
+          "subject_name": "Problemsolving using programming",
           "code": "PMP_LA_01_ENG",
           "course_type": "Laboratory",
           "enrollment": {
@@ -344,6 +358,7 @@
           }
         },
         {
+          "subject_name": "Problemsolving using programming",
           "code": "PMP_LA_02_ENG",
           "course_type": "Laboratory",
           "enrollment": {
@@ -365,6 +380,7 @@
           }
         },
         {
+          "subject_name": "Problemsolving using programming",
           "code": "PMP_LA_03_ENG",
           "course_type": "Laboratory",
           "enrollment": {
@@ -386,6 +402,7 @@
           }
         },
         {
+          "subject_name": "Problemsolving using programming",
           "code": "PMP_LA_04_ENG",
           "course_type": "Laboratory",
           "enrollment": {
@@ -416,6 +433,7 @@
     "courses": [
       [
         {
+          "subject_name": "Mathematical Foundations of Informatics",
           "code": "MFI_EA",
           "course_type": "Lecture",
           "enrollment": {
@@ -439,6 +457,7 @@
       ],
       [
         {
+          "subject_name": "Mathematical Foundations of Informatics",
           "code": "MFI_Gy_01",
           "course_type": "Practice",
           "enrollment": {
@@ -460,6 +479,7 @@
           }
         },
         {
+          "subject_name": "Mathematical Foundations of Informatics",
           "code": "MFI_Gy_02",
           "course_type": "Practice",
           "enrollment": {
@@ -481,6 +501,7 @@
           }
         },
         {
+          "subject_name": "Mathematical Foundations of Informatics",
           "code": "MFI_Gy_03",
           "course_type": "Practice",
           "enrollment": {
