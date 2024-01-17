@@ -1,4 +1,3 @@
-use std::fs::{self};
 use std::io::{self, Write};
 
 use data::{Course, Subject, Timetable};
@@ -9,33 +8,6 @@ mod excel;
 mod export;
 mod filter;
 mod sample_data;
-
-fn save_timetables(timetables: Vec<Timetable>) {
-  let out_dir = "out";
-  let full_dir = format!("{out_dir}/full");
-  let codes_dir = format!("{out_dir}/course-codes");
-  let images_dir = format!("{out_dir}/images");
-  fs::create_dir_all(out_dir).unwrap();
-
-  for subdirectory in vec![&full_dir, &codes_dir] {
-    fs::create_dir_all(&subdirectory).ok();
-    for entry in fs::read_dir(subdirectory).unwrap() {
-      fs::remove_file(entry.unwrap().path()).unwrap();
-    }
-  }
-
-  for (index, timetable) in timetables.iter().enumerate() {
-    export::json::save_timetable_json(timetable, format!("{full_dir}/timetable_{:04}.json", index));
-    export::course_code::save_course_codes(
-      timetable,
-      format!("{codes_dir}/timetable_{:04}.txt", index),
-    );
-    export::image::save_timetable_image(
-      timetable,
-      format!("{images_dir}/timetable_{:04}.bmp", index),
-    );
-  }
-}
 
 pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>> {
   let one_of_courses: Vec<Vec<&'a Course>> = subjects
@@ -71,6 +43,6 @@ fn main() {
     let filters = filter::parse_filters(&input);
     let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
-    save_timetables(filtered_timetables);
+    export::save_timetables(filtered_timetables);
   }
 }
