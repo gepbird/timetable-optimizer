@@ -85,3 +85,13 @@ Passes when there are no overlapping courses.
 Format: none
 
 Example (full): no_course_overlap=
+
+### no_course_between
+
+Passes when there are no courses between the specified times on the specified weekday.
+
+Format weekday,hours:minutes,hours:minutes
+
+Example: wed,9:30,11:50
+
+Example: monday,12:00,15:00

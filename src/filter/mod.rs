@@ -5,6 +5,7 @@ pub mod excluded_weekday;
 pub mod max_end_time;
 pub mod max_gap_between_courses;
 pub mod min_start_time;
+pub mod no_course_between;
 pub mod no_course_overlap;
 
 pub trait Filter {
@@ -30,6 +31,7 @@ fn parse_filter(spec: &str) -> Box<dyn Filter> {
     max_gap_between_courses::try_parse,
     exclude_teacher::try_parse,
     no_course_overlap::try_parse,
+    no_course_between::try_parse,
   ];
 
   parsers

@@ -3,13 +3,13 @@ use itertools::Itertools;
 use crate::data::Timetable;
 use crate::filter::{self, Filter};
 
-struct NoCourseOverlap();
+struct NoCourseOverlapFilter();
 
 pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
-  filter::parse_with_key(spec, "no_course_overlap", |_| NoCourseOverlap())
+  filter::parse_with_key(spec, "no_course_overlap", |_| NoCourseOverlapFilter())
 }
 
-impl Filter for NoCourseOverlap {
+impl Filter for NoCourseOverlapFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
     timetable.courses
       .iter()
