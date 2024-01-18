@@ -16,13 +16,15 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
     .map(|one_of_course| one_of_course.iter().collect::<Vec<&'a Course>>())
     .collect();
 
-  let timetables: Vec<Vec<&'a Course>> = one_of_courses
+  let timetables: Vec<Timetable> = one_of_courses
     .iter()
     .map(|x| x.as_slice())
     .collect::<Vec<&[&'a Course]>>()
     .cart_prod()
-    .map(|cp| {
-      cp.into_iter()
+    .enumerate()
+    .map(|(i, cp)| Timetable {
+      id: i as u32,
+      courses: cp.into_iter()
         .map(|&course| course)
         .collect::<Vec<&'a Course>>()
     })

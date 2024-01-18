@@ -5,8 +5,8 @@ use itertools::Itertools;
 use crate::data::Timetable;
 
 pub fn save_course_codes(timetable: &Timetable, file_path: String) {
-  let course_codes = timetable
-    .into_iter()
+  let course_codes = timetable.courses
+    .iter()
     .map(|course| course.code.clone())
     .join("\n");
 

@@ -15,7 +15,7 @@ pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
 
 impl Filter for MaxGapBetweenCoursesFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
-    timetable
+    timetable.courses
       .iter()
       .group_by(|course| course.occurrence.weekday)
       .into_iter()

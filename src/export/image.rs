@@ -57,7 +57,7 @@ fn draw_courses(
   day_start: NaiveTime,
   img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
 ) {
-  for course in timetable {
+  for course in &timetable.courses {
     let occ = &course.occurrence;
     let weekday = course.occurrence.weekday.number_from_monday() - 1;
     let duration = course.occurrence.end_time - course.occurrence.start_time;

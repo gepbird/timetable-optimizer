@@ -14,7 +14,7 @@ pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
 
 impl Filter for ExcludedWeekDayFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
-    timetable
+    timetable.courses
       .iter()
       .all(|course| course.occurrence.weekday != self.0)
   }

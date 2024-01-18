@@ -1,7 +1,7 @@
 use std::fs;
 
 use indicatif::ProgressBar;
-use rayon::iter::{IndexedParallelIterator, IntoParallelRefIterator, ParallelIterator};
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 use crate::data::Timetable;
 
@@ -25,17 +25,17 @@ pub fn save_timetables_parallel(timetables: Vec<Timetable>) {
 
   let progress_bar = ProgressBar::new(timetables.len() as u64);
 
-  timetables
-    .par_iter()
-    .enumerate()
-    .for_each(|(index, timetable)| {
-      let name = format!("timetable_{index:04}");
-      json::save_timetable_json(timetable, format!("{full_dir}/{name}.json"));
-      course_code::save_course_codes(timetable, format!("{codes_dir}/{name}.txt"));
-      let image_extension = if cfg!(debug_assertions) { "bmp" } else { "png" };
-      image::save_timetable_image(timetable, format!("{images_dir}/{name}.{image_extension}"));
-      progress_bar.inc(1);
-    });
+  timetables.par_iter().for_each(|timetable| {
+    let id = timetable.id;
+    let name = format!("timetable_{id:04}");
+    let image_extension = if cfg!(debug_assertions) { "bmp" } else { "png" };
+
+    json::save_timetable_json(timetable, format!("{full_dir}/{name}.json"));
+    course_code::save_course_codes(timetable, format!("{codes_dir}/{name}.txt"));
+    image::save_timetable_image(timetable, format!("{images_dir}/{name}.{image_extension}"));
+
+    progress_bar.inc(1);
+  });
 
   progress_bar.finish();
 }
