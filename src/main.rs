@@ -37,6 +37,7 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
 fn main() {
   let subjects = sample_data::get_subjects();
   let timetables = generate_timetables(&subjects);
+  export::save_timetables_parallel(&timetables);
 
   loop {
     print!("Enter filter: ");
@@ -46,6 +47,6 @@ fn main() {
     let filters = filter::parse_filters(&input);
     let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
-    export::save_timetables_parallel(&filtered_timetables);
+    export::symlink_filtered_timetables(&filtered_timetables);
   }
 }
