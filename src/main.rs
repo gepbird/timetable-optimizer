@@ -24,9 +24,10 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
     .enumerate()
     .map(|(i, cp)| Timetable {
       id: i as u32,
-      courses: cp.into_iter()
+      courses: cp
+        .into_iter()
         .map(|&course| course)
-        .collect::<Vec<&'a Course>>()
+        .collect::<Vec<&'a Course>>(),
     })
     .collect();
 
@@ -45,6 +46,6 @@ fn main() {
     let filters = filter::parse_filters(&input);
     let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
-    export::save_timetables_parallel(filtered_timetables);
+    export::save_timetables_parallel(&filtered_timetables);
   }
 }

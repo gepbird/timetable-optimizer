@@ -1,10 +1,10 @@
 use crate::data::Timetable;
 
+pub mod exclude_teacher;
 pub mod excluded_weekday;
 pub mod max_end_time;
 pub mod max_gap_between_courses;
 pub mod min_start_time;
-pub mod exclude_teacher;
 pub mod no_course_overlap;
 
 pub trait Filter {
@@ -23,7 +23,7 @@ where
 }
 
 fn parse_filter(spec: &str) -> Box<dyn Filter> {
-  let parsers: Vec<fn(&str) -> Option<Box<dyn Filter>>> = vec![
+  let parsers: &[fn(&str) -> Option<Box<dyn Filter>>] = &[
     min_start_time::try_parse,
     max_end_time::try_parse,
     excluded_weekday::try_parse,

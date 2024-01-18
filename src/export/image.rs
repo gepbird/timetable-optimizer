@@ -1,5 +1,6 @@
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
+use std::path::PathBuf;
 
 use cached::proc_macro::cached;
 use chrono::{Duration, NaiveTime, Weekday};
@@ -26,7 +27,7 @@ const GRAY: Rgba<u8> = Rgba([128, 128, 128, 255]);
 const DARK_GRAY: Rgba<u8> = Rgba([64, 64, 64, 255]);
 const BLACK: Rgba<u8> = Rgba([0, 0, 0, 255]);
 
-pub fn save_timetable_image(timetable: &Timetable, file_path: String) {
+pub fn save_timetable_image(timetable: &Timetable, file_path: PathBuf) {
   let day_start = NaiveTime::from_hms_opt(8, 0, 0).unwrap();
   let day_end = NaiveTime::from_hms_opt(20, 0, 0).unwrap();
   let day_length = day_end - day_start;
@@ -37,7 +38,7 @@ pub fn save_timetable_image(timetable: &Timetable, file_path: String) {
   let mut img = draw_timetable_base_cached(canvas_height, hours, day_start);
   draw_courses(timetable, day_start, &mut img);
 
-  img.save(file_path.as_str()).unwrap();
+  img.save(file_path).unwrap();
 }
 
 #[cached]
