@@ -3,19 +3,26 @@ use chrono::Weekday;
 use crate::data::Timetable;
 use crate::filter::{self, Filter};
 
-struct ExcludedWeekDayFilter(Weekday);
+struct FreeWorkday();
 
 pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
-  filter::parse_with_key(spec, "excluded_weekday", |value| {
-    let day = value.parse::<Weekday>().unwrap();
-    ExcludedWeekDayFilter(day)
-  })
+  filter::parse_with_key(spec, "free_workday", |_| FreeWorkday())
 }
 
-impl Filter for ExcludedWeekDayFilter {
+impl Filter for FreeWorkday {
   fn filter(&self, timetable: &Timetable) -> bool {
-    timetable.courses
-      .iter()
-      .all(|course| course.occurrence.weekday != self.0)
+    let workdays = &[
+      Weekday::Mon,
+      Weekday::Tue,
+      Weekday::Wed,
+      Weekday::Thu,
+      Weekday::Fri,
+    ];
+    workdays.into_iter().any(|workday| {
+      timetable
+        .courses
+        .iter()
+        .all(|course| course.occurrence.weekday != *workday)
+    })
   }
 }
