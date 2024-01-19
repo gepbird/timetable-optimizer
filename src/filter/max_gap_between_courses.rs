@@ -17,6 +17,7 @@ impl Filter for MaxGapBetweenCoursesFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
     timetable.courses
       .iter()
+      .sorted_by_key(|course| course.occurrence.weekday.num_days_from_monday())
       .group_by(|course| course.occurrence.weekday)
       .into_iter()
       .all(|(_, courses)| {
