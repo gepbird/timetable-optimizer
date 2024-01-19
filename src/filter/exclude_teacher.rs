@@ -11,7 +11,8 @@ pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
 
 impl Filter for ExcludeTeacherFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
-    timetable.courses
+    timetable
+      .courses
       .iter()
       .all(|course| !course.teacher.contains(&self.0))
   }

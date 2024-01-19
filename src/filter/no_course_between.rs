@@ -27,8 +27,6 @@ impl Filter for NoCourseBetweenFilter {
       .iter()
       .map(|course| &course.occurrence)
       .filter(|occ| occ.weekday == self.weekday)
-      .all(|occ| {
-        occ.end_time <= self.start || occ.start_time >= self.end
-      })
+      .all(|occ| occ.end_time <= self.start || occ.start_time >= self.end)
   }
 }

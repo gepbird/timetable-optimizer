@@ -14,7 +14,8 @@ pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
 
 impl Filter for MaxEndTimeFilter {
   fn filter(&self, timetable: &Timetable) -> bool {
-    timetable.courses
+    timetable
+      .courses
       .iter()
       .all(|course| course.occurrence.end_time <= self.0)
   }
