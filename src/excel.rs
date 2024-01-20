@@ -73,6 +73,17 @@ fn parse_enrollment(cell: String) -> Enrollment {
 }
 
 fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
+  if occ_and_loc.is_empty() {
+    return (
+      Occurrence {
+        weeks: Weeks::Every,
+        weekday: Weekday::Mon,
+        start_time: NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+        end_time: NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+      },
+      "".to_owned(),
+    );
+  }
   let (occ_str, loc) = occ_and_loc.split_once("  ").unwrap();
   let (weekday_str, times_str) = occ_str.split_once(':').unwrap();
   let weekday = parse_weekday(weekday_str);
