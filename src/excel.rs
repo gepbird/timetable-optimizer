@@ -4,7 +4,7 @@ use calamine::{DataType, Reader, Xlsx};
 use chrono::{NaiveTime, Weekday};
 use itertools::Itertools;
 
-use crate::data::{Course, CourseType, Enrollment, Occurrence, Weeks};
+use crate::data::{Course, CourseType, Enrollment, Occurrence};
 
 // an internal tool that converts Neptun's exported .xlsx into a .json
 // manual adjustions after json generation:
@@ -77,7 +77,7 @@ pub fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String
   if occ_and_loc.is_empty() {
     return (
       Occurrence {
-        weeks: Weeks::Every,
+        weeks: None,
         weekday: Weekday::Mon,
         start_time: NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
         end_time: NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
@@ -94,7 +94,7 @@ pub fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String
   let end_time = parse_time(end_str);
   return (
     Occurrence {
-      weeks: Weeks::Every, // placeholder, input data doesn't contain it
+      weeks: None,
       weekday,
       start_time,
       end_time,
