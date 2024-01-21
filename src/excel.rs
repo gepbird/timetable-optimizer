@@ -73,6 +73,7 @@ pub fn parse_enrollment(cell: String) -> Enrollment {
 }
 
 pub fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
+  // this cell has even more types of format for PE courses which are not implemented
   if occ_and_loc.is_empty() {
     return (
       Occurrence {

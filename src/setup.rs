@@ -16,6 +16,7 @@ pub fn import_subjects() -> Vec<Subject> {
   println!("Started importing subjects and courses");
   println!("When prompted, export the appropriate data from Neptun to an Excel file and drag and drop the file here");
   println!("Leave the prompt empty to skip importing that data");
+  println!("Don't import PE courses, use the no_course_between filter instead");
 
   let subjects = match read_xlsx("subjects".to_owned()) {
     Some(mut excel) => {
