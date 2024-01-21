@@ -59,12 +59,6 @@ Format: string
 Example: exclude_teacher=John
 Example: exclude_teacher=Jo
 
-### no_course_overlap
-
-Passes when there are no overlapping courses.
-Format: none
-Example: no_course_overlap=
-
 ### no_course_between
 
 Passes when there are no courses between the specified times on the specified weekday.

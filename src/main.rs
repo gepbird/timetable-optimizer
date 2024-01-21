@@ -1,6 +1,7 @@
 use std::env;
 
 use data::{Course, Subject, Timetable};
+use itertools::Itertools;
 use permutator::CartesianProduct;
 
 mod data;
@@ -29,6 +30,21 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
         .into_iter()
         .map(|&course| course)
         .collect::<Vec<&'a Course>>(),
+    })
+    // filter out overlapping courses
+    .filter(|timetable| {
+      timetable
+      .courses
+      .iter()
+      .sorted_by_key(|course| course.occurrence.weekday.num_days_from_monday())
+      .group_by(|course| course.occurrence.weekday)
+      .into_iter()
+      .all(|(_, courses)| {
+        courses
+          .sorted_by_key(|course| course.occurrence.start_time)
+          .tuple_windows()
+          .all(|(current, next)| next.occurrence.start_time >= current.occurrence.end_time)
+      })
     })
     .collect();
 
