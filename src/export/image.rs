@@ -59,6 +59,11 @@ fn draw_courses(
   img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
 ) {
   for course in &timetable.courses {
+    // TODO: temporary, remove when theres a struct for new courses with no timetable info
+    if course.occurrence.start_time == NaiveTime::from_hms_opt(0, 0, 0).unwrap() {
+      continue;
+    }
+
     let occ = &course.occurrence;
     let weekday = course.occurrence.weekday.number_from_monday() - 1;
     let duration = course.occurrence.end_time - course.occurrence.start_time;
@@ -91,10 +96,7 @@ fn draw_courses(
   }
 }
 
-fn draw_days_with_lines(
-  img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
-  canvas_height: u32,
-) {
+fn draw_days_with_lines(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, canvas_height: u32) {
   for day_seperator in 0..DAY_COUNT {
     let start_x = day_seperator * DAY_WIDTH + TIMES_WIDTH;
     draw_thick_line(
