@@ -19,7 +19,7 @@ where
   F: FnOnce(&str) -> T,
   T: Filter + 'static,
 {
-  match spec.strip_prefix(&(key.to_owned() + "=")) {
+  match spec.strip_prefix(&(key.to_string() + "=")) {
     Some(value) => Some(Box::new(parse_fn(value))),
     None => None,
   }

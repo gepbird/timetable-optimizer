@@ -37,7 +37,7 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
 
 fn main() {
   let args: Vec<String> = env::args().collect();
-  let subjects: Vec<Subject> = if args.contains(&"--setup".to_owned()) {
+  let subjects: Vec<Subject> = if args.contains(&"--setup".to_string()) {
     setup::import_subjects()
   } else {
     sample_data::get_subjects()

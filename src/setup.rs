@@ -18,7 +18,7 @@ pub fn import_subjects() -> Vec<Subject> {
   println!("Leave the prompt empty to skip importing that data");
   println!("Don't import PE courses, use the no_course_between filter instead");
 
-  let subjects = match read_xlsx("subjects".to_owned()) {
+  let subjects = match read_xlsx("subjects") {
     Some(mut excel) => {
       let worksheets = excel.worksheets();
       let (_name, sheet) = worksheets.first().unwrap();
@@ -40,14 +40,14 @@ pub fn import_subjects() -> Vec<Subject> {
 }
 
 fn import_courses(subject_name: &str) -> Option<Vec<OneOfCourse>> {
-  read_xlsx(format!("{subject_name} courses")).map(|mut excel| {
+  read_xlsx(&format!("{subject_name} courses")).map(|mut excel| {
     let worksheets = excel.worksheets();
     let (_name, sheet) = worksheets.first().unwrap();
     let courses = sheet
       .rows()
       .into_iter()
       .skip(1)
-      .map(|row| parse_course(subject_name.to_owned(), row))
+      .map(|row| parse_course(subject_name.to_string(), row))
       .sorted_by_key(|course| course.course_type)
       .group_by(|course| course.course_type)
       .into_iter()
@@ -124,10 +124,10 @@ fn parse_course(subject_name: String, row: &[DataType]) -> Course {
   }
 }
 
-fn read_xlsx<'a>(data_name: String) -> Option<Xlsx<BufReader<File>>> {
+fn read_xlsx<'a>(data_name: &str) -> Option<Xlsx<BufReader<File>>> {
   print!("Enter {data_name}: ");
-  let mut dirty_path = String::new();
   io::stdout().flush().unwrap();
+  let mut dirty_path = String::new();
   io::stdin().read_line(&mut dirty_path).unwrap();
   let path = dirty_path.trim().trim_matches('\'');
   if path.is_empty() {

@@ -33,7 +33,7 @@ fn parse_course(row: &[DataType]) -> Course {
   let mut row_iter = row.iter();
   let cell = |r: &mut Iter<'_, DataType>| r.next().unwrap().as_string().unwrap();
 
-  let subject_name = "Placeholder subject".to_owned();
+  let subject_name = "Placeholder subject".to_string();
   let code = cell(&mut row_iter);
   let course_type_str = cell(&mut row_iter);
   let course_type: CourseType = serde_json::from_str(&format!("\"{course_type_str}\"")).unwrap();
@@ -82,7 +82,7 @@ pub fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String
         start_time: NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
         end_time: NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
       },
-      "".to_owned(),
+      String::new(),
     );
   }
   let (occ_str, loc) = occ_and_loc.split_once("  ").unwrap();
@@ -99,7 +99,7 @@ pub fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String
       start_time,
       end_time,
     },
-    loc.to_owned(),
+    loc.to_string(),
   );
 }
 
