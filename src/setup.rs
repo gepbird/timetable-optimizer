@@ -7,14 +7,17 @@ use std::{
 use calamine::{DataType, Reader, Xlsx};
 use itertools::Itertools;
 
-use crate::data::Subject;
+use crate::{
+  data::{Course, CourseType, OneOfCourse, Subject},
+  excel,
+};
 
 pub fn import_subjects() -> Vec<Subject> {
   println!("Started importing subjects and courses");
   println!("When prompted, export the appropriate data from Neptun to an Excel file and drag and drop the file here");
   println!("Leave the prompt empty to skip importing that data");
 
-  let subjects = match read_xlsx("subjects") {
+  let subjects = match read_xlsx("subjects".to_owned()) {
     Some(mut excel) => {
       let worksheets = excel.worksheets();
       let (_name, sheet) = worksheets.first().unwrap();
@@ -23,6 +26,7 @@ pub fn import_subjects() -> Vec<Subject> {
         .into_iter()
         .skip(1)
         .map(parse_subject)
+        .flatten()
         .collect_vec()
     }
     None => vec![],
@@ -34,10 +38,33 @@ pub fn import_subjects() -> Vec<Subject> {
   subjects
 }
 
-fn parse_subject(row: &[DataType]) -> Subject {
+fn import_courses(subject_name: &str) -> Option<Vec<OneOfCourse>> {
+  read_xlsx(format!("{subject_name} courses")).map(|mut excel| {
+    let worksheets = excel.worksheets();
+    let (_name, sheet) = worksheets.first().unwrap();
+    let courses = sheet
+      .rows()
+      .into_iter()
+      .skip(1)
+      .map(|row| parse_course(subject_name.to_owned(), row))
+      .sorted_by_key(|course| course.course_type)
+      .group_by(|course| course.course_type)
+      .into_iter()
+      .map(|(_type, courses)| courses.collect_vec())
+      .collect_vec();
+    courses
+  })
+}
+
+fn parse_subject(row: &[DataType]) -> Option<Subject> {
   let mut r = row.iter();
 
   let name = cell(&mut r);
+  let courses = match import_courses(&name) {
+    Some(courses) => courses,
+    None => return None,
+  };
+
   let code = cell(&mut r);
   let group_name = cell_opt(&mut r);
   let number = cell_num_opt(&mut r);
@@ -48,9 +75,8 @@ fn parse_subject(row: &[DataType]) -> Subject {
   let completed = cell_bool(&mut r);
   let enrolled = cell_bool(&mut r);
   let queue = cell_opt(&mut r);
-  let courses = vec![];
 
-  Subject {
+  Some(Subject {
     name,
     code,
     group_name,
@@ -63,10 +89,41 @@ fn parse_subject(row: &[DataType]) -> Subject {
     enrolled,
     queue,
     courses,
+  })
+}
+
+fn parse_course(subject_name: String, row: &[DataType]) -> Course {
+  let mut r = row.iter();
+
+  let code = cell(&mut r);
+  let course_type_str = cell(&mut r);
+  let course_type: CourseType = serde_json::from_str(&format!("\"{course_type_str}\"")).unwrap();
+  let enrollment = excel::parse_enrollment(cell(&mut r));
+  r.next();
+  r.next();
+  let (occurrence, location) = excel::parse_occurrence_and_location(cell(&mut r));
+  let teacher = cell(&mut r);
+  let language = cell(&mut r);
+  let site = cell(&mut r);
+  let comment = cell(&mut r);
+  let description = cell(&mut r);
+
+  Course {
+    subject_name,
+    code,
+    course_type,
+    enrollment,
+    location,
+    teacher,
+    language,
+    site,
+    comment,
+    description,
+    occurrence,
   }
 }
 
-fn read_xlsx<'a>(data_name: &str) -> Option<Xlsx<BufReader<File>>> {
+fn read_xlsx<'a>(data_name: String) -> Option<Xlsx<BufReader<File>>> {
   print!("Enter {data_name}: ");
   let mut dirty_path = String::new();
   io::stdout().flush().unwrap();

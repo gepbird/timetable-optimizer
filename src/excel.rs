@@ -62,7 +62,7 @@ fn parse_course(row: &[DataType]) -> Course {
   }
 }
 
-fn parse_enrollment(cell: String) -> Enrollment {
+pub fn parse_enrollment(cell: String) -> Enrollment {
   let mut tokens = cell.split('/');
   let mut parse_next = || tokens.next().unwrap().parse().unwrap();
   Enrollment {
@@ -72,7 +72,7 @@ fn parse_enrollment(cell: String) -> Enrollment {
   }
 }
 
-fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
+pub fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
   if occ_and_loc.is_empty() {
     return (
       Occurrence {

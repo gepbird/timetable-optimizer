@@ -40,7 +40,7 @@ pub struct Course {
   pub occurrence: Occurrence,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CourseType {
   #[serde(alias = "Elmélet")]
   Lecture,
