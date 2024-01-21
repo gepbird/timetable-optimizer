@@ -1,7 +1,4 @@
-use std::{
-  env,
-  io::{self, Write},
-};
+use std::env;
 
 use data::{Course, Subject, Timetable};
 use permutator::CartesianProduct;
@@ -50,11 +47,7 @@ fn main() {
   export::save_timetables_parallel(&timetables);
 
   loop {
-    print!("Enter filter: ");
-    io::stdout().flush().unwrap();
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).unwrap();
-    let filters = filter::parse_filters(&input);
+    let filters = filter::prompt_filters();
     let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
     export::symlink_filtered_timetables(&filtered_timetables);

@@ -137,7 +137,7 @@ fn read_xlsx<'a>(data_name: String) -> Option<Xlsx<BufReader<File>>> {
   let excel: Xlsx<_> = match calamine::open_workbook(path) {
     Ok(excel) => excel,
     Err(err) => {
-      println!("Failed to open excel file: {}", err);
+      eprintln!("Failed to open excel file: {}", err);
       return read_xlsx(data_name);
     }
   };

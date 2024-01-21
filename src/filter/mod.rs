@@ -1,3 +1,5 @@
+use std::io::{self, Write};
+
 use crate::data::Timetable;
 
 pub mod exclude_teacher;
@@ -23,7 +25,7 @@ where
   }
 }
 
-fn parse_filter(spec: &str) -> Box<dyn Filter> {
+fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
   let parsers: &[fn(&str) -> Option<Box<dyn Filter>>] = &[
     min_start_time::try_parse,
     max_end_time::try_parse,
@@ -37,16 +39,29 @@ fn parse_filter(spec: &str) -> Box<dyn Filter> {
   parsers
     .into_iter()
     .find_map(|parser| parser(spec))
-    .expect("Invalid filter specification")
+    .ok_or_else(|| format!("Invalid filter specification: {spec}"))
 }
 
-pub fn parse_filters(specs: &str) -> Vec<Box<dyn Filter>> {
-  specs
+pub fn prompt_filters() -> Vec<Box<dyn Filter>> {
+  print!("Enter filter: ");
+  io::stdout().flush().unwrap();
+  let mut specs = String::new();
+  io::stdin().read_line(&mut specs).unwrap();
+
+  let filters_parsed = specs
     .trim()
     .split(' ')
     .filter(|spec| !spec.is_empty())
     .map(|spec| parse_filter(spec))
-    .collect()
+    .collect();
+
+  match filters_parsed {
+    Ok(filters) => filters,
+    Err(e) => {
+      eprintln!("Error parsing filter: {e}");
+      prompt_filters()
+    }
+  }
 }
 
 pub fn filter_timetables(
