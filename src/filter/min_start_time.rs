@@ -5,10 +5,11 @@ use crate::filter::{self, Filter};
 
 struct MinStartTimeFilter(NaiveTime);
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
   filter::parse_with_key(spec, "min_start_time", |value| {
-    let start_time = NaiveTime::parse_from_str(value, "%H:%M").unwrap();
-    MinStartTimeFilter(start_time)
+    let start_time =
+      NaiveTime::parse_from_str(value, "%H:%M").map_err(|_| format!("Invalid time: {value}"))?;
+    Ok(MinStartTimeFilter(start_time))
   })
 }
 

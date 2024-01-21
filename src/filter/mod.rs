@@ -14,19 +14,26 @@ pub trait Filter {
   fn filter(&self, timetable: &crate::data::Timetable) -> bool;
 }
 
-fn parse_with_key<F, T>(spec: &str, key: &str, parse_fn: F) -> Option<Box<dyn Filter>>
+fn parse_with_key<F, T>(
+  spec: &str,
+  key: &str,
+  parse_fn: F,
+) -> Option<Result<Box<dyn Filter>, String>>
 where
-  F: FnOnce(&str) -> T,
+  F: FnOnce(&str) -> Result<T, String>,
   T: Filter + 'static,
 {
   match spec.strip_prefix(&(key.to_string() + "=")) {
-    Some(value) => Some(Box::new(parse_fn(value))),
+    Some(value) => Some(match parse_fn(value) {
+      Ok(filter) => Ok(Box::new(filter)),
+      Err(e) => Err(e),
+    }),
     None => None,
   }
 }
 
 fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
-  let parsers: &[fn(&str) -> Option<Box<dyn Filter>>] = &[
+  let parsers: &[fn(&str) -> Option<Result<Box<dyn Filter>, String>>] = &[
     min_start_time::try_parse,
     max_end_time::try_parse,
     excluded_weekday::try_parse,
@@ -39,7 +46,7 @@ fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
   parsers
     .into_iter()
     .find_map(|parser| parser(spec))
-    .ok_or_else(|| format!("Invalid filter specification: {spec}"))
+    .ok_or_else(|| format!("Invalid filter specification: {spec}"))?
 }
 
 pub fn prompt_filters() -> Vec<Box<dyn Filter>> {

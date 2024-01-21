@@ -5,10 +5,11 @@ use crate::filter::{self, Filter};
 
 struct MaxEndTimeFilter(NaiveTime);
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
   filter::parse_with_key(spec, "max_end_time", |value| {
-    let end_time = NaiveTime::parse_from_str(value, "%H:%M").unwrap();
-    MaxEndTimeFilter(end_time)
+    let end_time =
+      NaiveTime::parse_from_str(value, "%H:%M").map_err(|_| format!("Invalid time: {value}"))?;
+    Ok(MaxEndTimeFilter(end_time))
   })
 }
 

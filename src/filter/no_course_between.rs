@@ -9,14 +9,22 @@ struct NoCourseBetweenFilter {
   pub end: NaiveTime,
 }
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
   filter::parse_with_key(spec, "no_course_between", |value| {
     let mut tokens = value.split(',');
-    NoCourseBetweenFilter {
-      weekday: tokens.next().unwrap().parse::<Weekday>().unwrap(),
-      start: NaiveTime::parse_from_str(tokens.next().unwrap(), "%H:%M").unwrap(),
-      end: NaiveTime::parse_from_str(tokens.next().unwrap(), "%H:%M").unwrap(),
-    }
+    let mut token = || {
+      tokens
+        .next()
+        .ok_or(format!("Not enough comma seperated arguments: {value}"))
+    };
+    let weekday = token()?;
+    Ok(NoCourseBetweenFilter {
+      weekday: weekday.parse::<Weekday>().map_err(|_| format!("Invalid weekday: {weekday}"))?,
+      start: NaiveTime::parse_from_str(token()?, "%H:%M")
+        .map_err(|_| format!("Invalid time: {value}"))?,
+      end: NaiveTime::parse_from_str(token()?, "%H:%M")
+        .map_err(|_| format!("Invalid time: {value}"))?,
+    })
   })
 }
 

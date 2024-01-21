@@ -3,10 +3,10 @@ use chrono::Weekday;
 use crate::data::Timetable;
 use crate::filter::{self, Filter};
 
-struct FreeWorkday();
+struct FreeWorkday;
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
-  filter::parse_with_key(spec, "free_workday", |_| FreeWorkday())
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
+  filter::parse_with_key(spec, "free_workday", |_| Ok(FreeWorkday))
 }
 
 impl Filter for FreeWorkday {

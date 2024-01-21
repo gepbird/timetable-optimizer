@@ -3,9 +3,9 @@ use crate::filter::{self, Filter};
 
 struct ExcludeTeacherFilter(String);
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
   filter::parse_with_key(spec, "exclude_teacher", |value| {
-    ExcludeTeacherFilter(value.to_string())
+    Ok(ExcludeTeacherFilter(value.to_string()))
   })
 }
 

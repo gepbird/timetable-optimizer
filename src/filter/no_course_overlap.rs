@@ -3,10 +3,10 @@ use itertools::Itertools;
 use crate::data::Timetable;
 use crate::filter::{self, Filter};
 
-struct NoCourseOverlapFilter();
+struct NoCourseOverlapFilter;
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
-  filter::parse_with_key(spec, "no_course_overlap", |_| NoCourseOverlapFilter())
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
+  filter::parse_with_key(spec, "no_course_overlap", |_| Ok(NoCourseOverlapFilter))
 }
 
 impl Filter for NoCourseOverlapFilter {

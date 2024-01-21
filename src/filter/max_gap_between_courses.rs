@@ -6,10 +6,10 @@ use crate::filter::{self, Filter};
 
 struct MaxGapBetweenCoursesFilter(Duration);
 
-pub fn try_parse(spec: &str) -> Option<Box<dyn Filter>> {
+pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
   filter::parse_with_key(spec, "max_gap_minutes_between_courses", |value| {
-    let max_gap = value.parse::<i64>().unwrap();
-    MaxGapBetweenCoursesFilter(Duration::minutes(max_gap))
+    let max_gap = value.parse::<i64>().map_err(|_| format!("Invalid positive number: {value}"))?;
+    Ok(MaxGapBetweenCoursesFilter(Duration::minutes(max_gap)))
   })
 }
 
