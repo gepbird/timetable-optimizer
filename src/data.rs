@@ -7,7 +7,7 @@ pub struct Subject {
   pub code: String,
   pub group_name: Option<String>,
   pub number: Option<u32>,
-  pub recommended_semester: u32,
+  pub recommended_semester: Option<u32>,
   pub credits: u32,
   pub subject_type: Option<String>,
   pub comment: Option<String>,

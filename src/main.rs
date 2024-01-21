@@ -1,4 +1,7 @@
-use std::io::{self, Write};
+use std::{
+  env,
+  io::{self, Write},
+};
 
 use data::{Course, Subject, Timetable};
 use permutator::CartesianProduct;
@@ -8,6 +11,7 @@ mod excel;
 mod export;
 mod filter;
 mod sample_data;
+mod setup;
 
 pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>> {
   let one_of_courses: Vec<Vec<&'a Course>> = subjects
@@ -35,7 +39,13 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
 }
 
 fn main() {
-  let subjects = sample_data::get_subjects();
+  let args: Vec<String> = env::args().collect();
+  let subjects: Vec<Subject> = if args.contains(&"--setup".to_owned()) {
+    setup::import_subjects()
+  } else {
+    sample_data::get_subjects()
+  };
+
   let timetables = generate_timetables(&subjects);
   export::save_timetables_parallel(&timetables);
 
