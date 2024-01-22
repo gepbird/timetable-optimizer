@@ -1,4 +1,4 @@
-use base64::prelude::*;
+use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 use chrono::{NaiveTime, Weekday};
 use serde::{Deserialize, Serialize};
 use sha2::{
@@ -54,7 +54,7 @@ impl<'a> Timetable<'a> {
       hasher.update(course.hash);
     }
 
-    let hash = BASE64_STANDARD.encode(hasher.finalize());
+    let hash = URL_SAFE.encode(hasher.finalize());
     self.hash = Some(hash);
   }
 }
