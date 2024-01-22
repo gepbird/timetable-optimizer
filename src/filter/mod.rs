@@ -1,4 +1,4 @@
-use std::io::{self, Write};
+use rustyline::{history::DefaultHistory, Editor};
 
 use crate::data::Timetable;
 
@@ -48,10 +48,12 @@ fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
 }
 
 pub fn prompt_filters() -> Vec<Box<dyn Filter>> {
-  print!("Enter filter: ");
-  io::stdout().flush().unwrap();
-  let mut specs = String::new();
-  io::stdin().read_line(&mut specs).unwrap();
+  let mut rl = Editor::<(), DefaultHistory>::new().unwrap();
+  let hist_file = "out/history.txt";
+  rl.load_history(hist_file).ok();
+  let specs = rl.readline("Enter filter: ").unwrap();
+  rl.add_history_entry(specs.as_str()).unwrap();
+  rl.save_history(hist_file).unwrap();
 
   let filters_parsed = specs
     .trim()
