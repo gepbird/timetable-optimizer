@@ -111,7 +111,7 @@ impl Course {
     course
   }
 
-  fn update_hash(&mut self) {
+  pub fn update_hash(&mut self) {
     let serialized = serde_json::to_string(&self).unwrap();
     self.hash = Sha256::digest(serialized.as_bytes());
   }
