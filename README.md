@@ -17,12 +17,12 @@ $ cargo run
 # empty filter will return all the timetables
 Enter filter:
 Filtered timetables: 144
-Enter filter: free_workday=
+Enter filter: free_workdays=1
 Filtered timetables: 32
 Enter filter: max_gap_minutes_between_courses=150
 Filtered timetables: 40
 # multiple filters
-Enter filter: free_workday= max_gap_minutes_between_courses=150
+Enter filter: free_workdays=1 max_gap_minutes_between_courses=150
 Filtered timetables: 12
 ```
 
@@ -40,11 +40,11 @@ Passes when there are no later courses on any day than the specified time.
 Format: hours::minutes
 Example: max_end_time=16:00
 
-### free_workday
+### free_workdays
 
-Passes when there are no courses on at least one workday (Monday to Friday).
-Format: none
-Example: free_weekday=
+Passes when there are no courses for at least the specified amount of workdays (Monday to Friday).
+Format: number
+Example: free_workdays=1
 
 ### max_gap_minutes_between_courses
 

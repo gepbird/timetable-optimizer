@@ -3,7 +3,7 @@ use std::io::{self, Write};
 use crate::data::Timetable;
 
 pub mod exclude_teacher;
-pub mod excluded_weekday;
+pub mod free_workdays;
 pub mod max_end_time;
 pub mod max_gap_between_courses;
 pub mod min_start_time;
@@ -35,7 +35,7 @@ fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
   let parsers: &[fn(&str) -> Option<Result<Box<dyn Filter>, String>>] = &[
     min_start_time::try_parse,
     max_end_time::try_parse,
-    excluded_weekday::try_parse,
+    free_workdays::try_parse,
     max_gap_between_courses::try_parse,
     exclude_teacher::try_parse,
     no_course_between::try_parse,
