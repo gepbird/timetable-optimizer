@@ -61,12 +61,12 @@ fn main() {
   };
 
   let timetables = generate_timetables(&subjects);
-  export::save_timetables_parallel(&timetables);
 
   loop {
     let filters = filter::prompt_filters();
-    let filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
+    // TODO: due to cloning, mutating won't persist (saving cached hash)
+    let mut filtered_timetables = filter::filter_timetables(timetables.clone(), filters);
     println!("Filtered timetables: {}", filtered_timetables.len());
-    export::symlink_filtered_timetables(&filtered_timetables);
+    export::save_filtered(&mut filtered_timetables);
   }
 }
