@@ -29,22 +29,22 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
       courses: cp
         .into_iter()
         .map(|&course| course)
+        .sorted_by_key(|course| course.occurrence.start_time)
+        .sorted_by_key(|course| course.occurrence.weekday as u8)
         .collect::<Vec<&'a Course>>(),
     })
     // filter out overlapping courses
     .filter(|timetable| {
       timetable
-      .courses
-      .iter()
-      .sorted_by_key(|course| course.occurrence.weekday.num_days_from_monday())
-      .group_by(|course| course.occurrence.weekday)
-      .into_iter()
-      .all(|(_, courses)| {
-        courses
-          .sorted_by_key(|course| course.occurrence.start_time)
-          .tuple_windows()
-          .all(|(current, next)| next.occurrence.start_time >= current.occurrence.end_time)
-      })
+        .courses
+        .iter()
+        .group_by(|course| course.occurrence.weekday)
+        .into_iter()
+        .all(|(_, courses)| {
+          courses
+            .tuple_windows()
+            .all(|(current, next)| next.occurrence.start_time >= current.occurrence.end_time)
+        })
     })
     .collect();
 
