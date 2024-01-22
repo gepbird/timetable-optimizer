@@ -1,5 +1,10 @@
+use base64::prelude::*;
 use chrono::{NaiveTime, Weekday};
 use serde::{Deserialize, Serialize};
+use sha2::{
+  digest::{generic_array::GenericArray, typenum::U32},
+  Digest, Sha256,
+};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Subject {
@@ -23,6 +28,35 @@ pub type OneOfCourse = Vec<Course>;
 pub struct Timetable<'a> {
   pub id: u32,
   pub courses: Vec<&'a Course>,
+  hash: Option<String>,
+}
+
+impl<'a> Timetable<'a> {
+  pub fn new(id: u32, courses: Vec<&'a Course>) -> Timetable<'a> {
+    Timetable {
+      id,
+      courses,
+      hash: None,
+    }
+  }
+
+  pub fn hash(&mut self) -> &str {
+    if self.hash.is_none() {
+      self.update_hash();
+    }
+
+    self.hash.as_ref().unwrap()
+  }
+
+  fn update_hash(&mut self) {
+    let mut hasher = Sha256::new();
+    for course in &self.courses {
+      hasher.update(course.hash);
+    }
+
+    let hash = BASE64_STANDARD.encode(hasher.finalize());
+    self.hash = Some(hash);
+  }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -30,6 +64,7 @@ pub struct Course {
   pub subject_name: String,
   pub code: String,
   pub course_type: CourseType,
+  #[serde(skip)]
   pub enrollment: Enrollment,
   pub location: String,
   pub teacher: String,
@@ -38,6 +73,48 @@ pub struct Course {
   pub comment: String,
   pub description: String,
   pub occurrence: Occurrence,
+  #[serde(skip)]
+  hash: GenericArray<u8, U32>,
+}
+
+impl Course {
+  pub fn new(
+    subject_name: String,
+    code: String,
+    course_type: CourseType,
+    enrollment: Enrollment,
+    location: String,
+    teacher: String,
+    language: String,
+    site: String,
+    comment: String,
+    description: String,
+    occurrence: Occurrence,
+  ) -> Course {
+    let mut course = Course {
+      subject_name,
+      code,
+      course_type,
+      enrollment,
+      location,
+      teacher,
+      language,
+      site,
+      comment,
+      description,
+      occurrence,
+      hash: GenericArray::default(),
+    };
+
+    course.update_hash();
+
+    course
+  }
+
+  fn update_hash(&mut self) {
+    let serialized = serde_json::to_string(&self).unwrap();
+    self.hash = Sha256::digest(serialized.as_bytes());
+  }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -50,7 +127,7 @@ pub enum CourseType {
   Practice,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct Enrollment {
   pub people_joined: u32,
   pub people_queue: u32,

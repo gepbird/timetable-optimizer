@@ -24,14 +24,15 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
     .collect::<Vec<&[&'a Course]>>()
     .cart_prod()
     .enumerate()
-    .map(|(i, cp)| Timetable {
-      id: i as u32,
-      courses: cp
-        .into_iter()
-        .map(|&course| course)
-        .sorted_by_key(|course| course.occurrence.start_time)
-        .sorted_by_key(|course| course.occurrence.weekday as u8)
-        .collect::<Vec<&'a Course>>(),
+    .map(|(i, cp)| {
+      Timetable::new(
+        i as u32,
+        cp.into_iter()
+          .map(|&course| course)
+          .sorted_by_key(|course| course.occurrence.start_time)
+          .sorted_by_key(|course| course.occurrence.weekday as u8)
+          .collect::<Vec<&'a Course>>(),
+      )
     })
     // filter out overlapping courses
     .filter(|timetable| {

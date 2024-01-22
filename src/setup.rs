@@ -109,7 +109,7 @@ fn parse_course(subject_name: String, row: &[DataType]) -> Course {
   let comment = cell(&mut r);
   let description = cell(&mut r);
 
-  Course {
+  Course::new(
     subject_name,
     code,
     course_type,
@@ -121,7 +121,7 @@ fn parse_course(subject_name: String, row: &[DataType]) -> Course {
     comment,
     description,
     occurrence,
-  }
+  )
 }
 
 fn read_xlsx<'a>(data_name: &str) -> Option<Xlsx<BufReader<File>>> {

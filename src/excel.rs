@@ -47,7 +47,7 @@ fn parse_course(row: &[DataType]) -> Course {
   let comment = cell(&mut row_iter);
   let description = cell(&mut row_iter);
 
-  Course {
+  Course::new(
     subject_name,
     code,
     course_type,
@@ -59,7 +59,7 @@ fn parse_course(row: &[DataType]) -> Course {
     comment,
     description,
     occurrence,
-  }
+  )
 }
 
 pub fn parse_enrollment(cell: String) -> Enrollment {
