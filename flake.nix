@@ -20,8 +20,11 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             # cargo, clippy, cargo-fmt, rustdoc, rustfmt, and other tools
-            rust-bin.stable.latest.default
+            (rust-bin.stable.latest.default.override {
+              targets = [ "wasm32-unknown-unknown" ];
+            })
             cargo-watch
+            trunk
           ];
         };
       }
