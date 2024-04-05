@@ -25,6 +25,7 @@
             })
             cargo-watch
             trunk
+            tailwindcss
           ];
         };
       }
