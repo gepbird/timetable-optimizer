@@ -119,11 +119,8 @@ impl Course {
 
 #[derive(Debug, Clone, Serialize, Deserialize, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CourseType {
-  #[serde(alias = "Elmélet")]
   Lecture,
-  #[serde(alias = "Labor")]
   Laboratory,
-  #[serde(alias = "Gyakorlat")]
   Practice,
 }
 

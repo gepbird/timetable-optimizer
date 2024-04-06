@@ -17,13 +17,13 @@ pub fn parse_subjects(excel: &mut Xlsx<BufReader<File>>) -> Vec<Subject> {
   subjects
 }
 
-pub fn parse_courses(subject_name: String, excel: &mut Xlsx<BufReader<File>>) -> Vec<Course> {
+pub fn parse_courses(subject_name: &str, excel: &mut Xlsx<BufReader<File>>) -> Vec<Course> {
   let sheet = &excel.worksheets()[0].1;
   let courses = sheet
     .rows()
     .into_iter()
     .skip(1)
-    .map(|course| parse_course(subject_name.clone(), course))
+    .map(|course| parse_course(subject_name.to_string(), course))
     .collect_vec();
   courses
 }
@@ -64,8 +64,7 @@ fn parse_course(subject_name: String, row: &[DataType]) -> Course {
   let mut r = row.iter();
 
   let code = cell(&mut r);
-  let course_type_str = cell(&mut r);
-  let course_type: CourseType = serde_json::from_str(&format!("\"{course_type_str}\"")).unwrap();
+  let course_type = parse_course_type(&cell(&mut r));
   let enrollment = parse_enrollment(cell(&mut r));
   r.next();
   r.next();
@@ -89,6 +88,15 @@ fn parse_course(subject_name: String, row: &[DataType]) -> Course {
     description,
     occurrence,
   )
+}
+
+fn parse_course_type(cell: &str) -> CourseType {
+  match cell {
+    "Elmélet" => CourseType::Lecture,
+    "Labor" => CourseType::Laboratory,
+    "Gyakorlat" => CourseType::Practice,
+    _ => panic!("Invalid course type: {cell}"),
+  }
 }
 
 fn parse_enrollment(cell: String) -> Enrollment {
@@ -142,7 +150,7 @@ fn parse_weekday(weekday_str: &str) -> Weekday {
     "P" => Weekday::Fri,
     "SZO" => Weekday::Sat,
     "V" => Weekday::Sun,
-    _ => panic!("Invalid weekday: {}", weekday_str),
+    _ => panic!("Invalid weekday: {weekday_str}"),
   }
 }
 
