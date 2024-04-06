@@ -6,7 +6,7 @@ use std::{
 use calamine::Xlsx;
 use itertools::Itertools;
 
-use crate::{
+use timetable_optimizer_lib::{
   data::{OneOfCourse, Subject},
   excel_parser,
 };

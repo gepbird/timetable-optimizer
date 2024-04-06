@@ -2007,10 +2007,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "timetable-optimizer"
+name = "timetable-optimizer-cli"
 version = "0.1.0"
 dependencies = [
- "base64",
  "cached",
  "calamine",
  "chrono",
@@ -2022,6 +2021,19 @@ dependencies = [
  "rayon",
  "rusttype",
  "rustyline",
+ "serde",
+ "serde_json",
+ "timetable-optimizer-lib",
+]
+
+[[package]]
+name = "timetable-optimizer-lib"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "calamine",
+ "chrono",
+ "itertools 0.12.1",
  "serde",
  "serde_json",
  "sha2",

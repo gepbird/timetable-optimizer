@@ -1,4 +1,4 @@
-use crate::data::Timetable;
+use timetable_optimizer_lib::data::Timetable;
 use crate::filter::{self, Filter};
 
 struct ExcludeTeacherFilter(String);

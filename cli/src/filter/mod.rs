@@ -1,6 +1,6 @@
 use rustyline::{history::DefaultHistory, Editor};
 
-use crate::data::Timetable;
+use timetable_optimizer_lib::data::Timetable;
 
 pub mod exclude_teacher;
 pub mod free_workdays;
@@ -10,7 +10,7 @@ pub mod min_start_time;
 pub mod no_course_between;
 
 pub trait Filter {
-  fn filter(&self, timetable: &crate::data::Timetable) -> bool;
+  fn filter(&self, timetable: &Timetable) -> bool;
 }
 
 fn parse_with_key<F, T>(

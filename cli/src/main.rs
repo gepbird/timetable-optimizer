@@ -1,11 +1,9 @@
 use std::env;
 
-use data::{Course, Subject, Timetable};
+use timetable_optimizer_lib::data::{Course, Subject, Timetable};
 use itertools::Itertools;
 use permutator::CartesianProduct;
 
-mod data;
-mod excel_parser;
 mod export;
 mod filter;
 mod sample_data;

@@ -5,7 +5,7 @@ use std::{env, fs};
 use indicatif::ProgressBar;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 
-use crate::data::Timetable;
+use timetable_optimizer_lib::data::Timetable;
 
 pub mod course_code;
 pub mod image;

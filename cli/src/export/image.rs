@@ -8,7 +8,7 @@ use image::{ImageBuffer, Rgba};
 use imageproc::{drawing, rect::Rect};
 use rusttype::{Font, Scale};
 
-use crate::data::Timetable;
+use timetable_optimizer_lib::data::Timetable;
 
 type Color = Rgba<u8>;
 type Image = ImageBuffer<Color, Vec<u8>>;

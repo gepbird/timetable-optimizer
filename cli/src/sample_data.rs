@@ -1,6 +1,6 @@
 use std::fs;
 
-use crate::data::Subject;
+use timetable_optimizer_lib::data::Subject;
 
 pub fn get_subjects() -> Vec<Subject> {
   let json = fs::read_to_string("data/sample.json").unwrap();
