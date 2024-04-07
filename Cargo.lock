@@ -2043,8 +2043,10 @@ dependencies = [
 name = "timetable-optimizer-web"
 version = "0.1.0"
 dependencies = [
+ "calamine",
  "gloo 0.11.0",
  "js-sys",
+ "timetable-optimizer-lib",
  "web-sys",
  "yew",
 ]

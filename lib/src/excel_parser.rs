@@ -1,4 +1,7 @@
-use std::{fs::File, io::BufReader, slice::Iter};
+use std::{
+  io::{BufRead, Seek},
+  slice::Iter,
+};
 
 use calamine::{DataType, Reader, Xlsx};
 use chrono::{NaiveTime, Weekday};
@@ -6,7 +9,7 @@ use itertools::Itertools;
 
 use crate::data::{Course, CourseType, Enrollment, Occurrence, Subject};
 
-pub fn parse_subjects(excel: &mut Xlsx<BufReader<File>>) -> Vec<Subject> {
+pub fn parse_subjects<R: BufRead + Seek>(excel: &mut Xlsx<R>) -> Vec<Subject> {
   let sheet = &excel.worksheets()[0].1;
   let subjects = sheet
     .rows()
@@ -17,7 +20,7 @@ pub fn parse_subjects(excel: &mut Xlsx<BufReader<File>>) -> Vec<Subject> {
   subjects
 }
 
-pub fn parse_courses(subject_name: &str, excel: &mut Xlsx<BufReader<File>>) -> Vec<Course> {
+pub fn parse_courses<R: BufRead + Seek>(subject_name: &str, excel: &mut Xlsx<R>) -> Vec<Course> {
   let sheet = &excel.worksheets()[0].1;
   let courses = sheet
     .rows()
