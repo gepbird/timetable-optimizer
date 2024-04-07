@@ -40,14 +40,7 @@ pub fn import_subjects() -> Vec<Subject> {
 
 fn import_courses(subject_name: &str) -> Option<Vec<OneOfCourse>> {
   read_xlsx(&format!("{subject_name} courses")).map(|mut excel| {
-    let courses = excel_parser::parse_courses(subject_name, &mut excel);
-    courses
-      .into_iter()
-      .sorted_by_key(|course| course.course_type)
-      .group_by(|course| course.course_type)
-      .into_iter()
-      .map(|(_type, courses)| courses.collect_vec())
-      .collect_vec()
+    excel_parser::parse_courses(subject_name, &mut excel)
   })
 }
 

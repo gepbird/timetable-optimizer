@@ -7,7 +7,7 @@ use calamine::{DataType, Reader, Xlsx};
 use chrono::{NaiveTime, Weekday};
 use itertools::Itertools;
 
-use crate::data::{Course, CourseType, Enrollment, Occurrence, Subject};
+use crate::data::{Course, CourseType, Enrollment, Occurrence, OneOfCourse, Subject};
 
 pub fn parse_subjects<R: BufRead + Seek>(excel: &mut Xlsx<R>) -> Vec<Subject> {
   let sheet = &excel.worksheets()[0].1;
@@ -20,13 +20,17 @@ pub fn parse_subjects<R: BufRead + Seek>(excel: &mut Xlsx<R>) -> Vec<Subject> {
   subjects
 }
 
-pub fn parse_courses<R: BufRead + Seek>(subject_name: &str, excel: &mut Xlsx<R>) -> Vec<Course> {
+pub fn parse_courses<R: BufRead + Seek>(subject_name: &str, excel: &mut Xlsx<R>) -> Vec<OneOfCourse> {
   let sheet = &excel.worksheets()[0].1;
   let courses = sheet
     .rows()
     .into_iter()
     .skip(1)
     .map(|course| parse_course(subject_name.to_string(), course))
+    .sorted_by_key(|course| course.course_type)
+    .group_by(|course| course.course_type)
+    .into_iter()
+    .map(|(_type, courses)| courses.collect_vec())
     .collect_vec();
   courses
 }
