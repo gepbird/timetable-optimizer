@@ -1,3 +1,5 @@
+use std::fmt::{self, Display, Formatter};
+
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 use chrono::{NaiveTime, Weekday};
 use serde::{Deserialize, Serialize};
@@ -117,7 +119,9 @@ impl Course {
   }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(
+  Debug, Clone, Serialize, Deserialize, Copy, PartialEq, Eq, PartialOrd, Ord, strum::Display,
+)]
 pub enum CourseType {
   Lecture,
   Laboratory,
@@ -137,6 +141,12 @@ pub struct Occurrence {
   pub weekday: Weekday,
   pub start_time: NaiveTime,
   pub end_time: NaiveTime,
+}
+
+impl Display for Occurrence {
+  fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+    write!(f, "{} {}-{}", self.weekday, self.start_time, self.end_time)
+  }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
