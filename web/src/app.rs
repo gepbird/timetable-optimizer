@@ -179,9 +179,9 @@ impl App {
             { for courses.into_iter().map(|c| html! {
               <tr>
                 <td>{ &c.code }</td>
-                <td>{ &c.course_type }</td>
+                <td>{ &c.course_type.to_string() }</td>
                 <td>{ &c.location }</td>
-                <td>{ &c.occurrence }</td>
+                <td>{ &c.occurrence.to_string() }</td>
                 <td>{ &c.teacher }</td>
               </tr>
             }) }
