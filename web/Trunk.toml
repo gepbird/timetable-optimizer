@@ -6,3 +6,6 @@ dist = "dist"
 stage = "build"
 command = "sh"
 command_arguments = ["-c", "tailwindcss -i src/tailwind.css -o $TRUNK_STAGING_DIR/tailwind.css"]
+
+[serve]
+address = "0.0.0.0"
