@@ -2,11 +2,14 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
 
+use ab_glyph::{FontRef, PxScale};
 use cached::proc_macro::cached;
 use chrono::{Duration, NaiveTime, Weekday};
-use image::{RgbImage, Rgb};
-use imageproc::{drawing, rect::Rect};
-use rusttype::{Font, Scale};
+use imageproc::{
+  drawing,
+  image::{Rgb, RgbImage},
+  rect::Rect,
+};
 
 use timetable_optimizer_lib::data::Timetable;
 
@@ -82,7 +85,7 @@ fn draw_courses(timetable: &Timetable, day_start: NaiveTime, img: &mut RgbImage)
       foreground,
       x as i32 + PADDING,
       y as i32 + PADDING,
-      Scale { x: 16.0, y: 16.0 },
+      PxScale { x: 16.0, y: 16.0 },
       &get_font(),
       &course.code,
     );
@@ -106,7 +109,7 @@ fn draw_days_with_lines(img: &mut RgbImage, canvas_height: u32) {
       WHITE,
       start_x as i32 + 10,
       10 as i32,
-      Scale { x: 30.0, y: 30.0 },
+      PxScale { x: 30.0, y: 30.0 },
       &get_font(),
       &day_name,
     );
@@ -130,7 +133,7 @@ fn draw_hours_with_lines(img: &mut RgbImage, hours: i64, day_start: NaiveTime) {
       WHITE,
       PADDING,
       y as i32 + PADDING,
-      Scale { x: 16.0, y: 16.0 },
+      PxScale { x: 16.0, y: 16.0 },
       &get_font(),
       time.format("%H:%M").to_string().as_str(),
     );
@@ -162,10 +165,9 @@ fn draw_thick_line(
   drawing::draw_filled_rect_mut(img, rect, color);
 }
 
-fn get_font<'a>() -> Font<'a> {
+fn get_font<'a>() -> FontRef<'a> {
   let font_data: &[u8] = include_bytes!("../../data/Helvetica.ttf");
-  let font = Font::try_from_bytes(font_data).unwrap();
-  font
+  FontRef::try_from_slice(font_data).unwrap()
 }
 
 fn color_hash(course_code: &str) -> Rgb<u8> {
