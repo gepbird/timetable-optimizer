@@ -4,13 +4,13 @@ use std::path::PathBuf;
 
 use cached::proc_macro::cached;
 use chrono::{Duration, NaiveTime, Weekday};
-use image::{ImageBuffer, Rgba};
+use image::{ImageBuffer, Rgb};
 use imageproc::{drawing, rect::Rect};
 use rusttype::{Font, Scale};
 
 use timetable_optimizer_lib::data::Timetable;
 
-type Color = Rgba<u8>;
+type Color = Rgb<u8>;
 type Image = ImageBuffer<Color, Vec<u8>>;
 
 const HEADER_HEIGHT: u32 = 50;
@@ -22,10 +22,10 @@ const PADDING: i32 = 5;
 const CANVAS_WIDTH: u32 = TIMES_WIDTH + DAY_WIDTH * DAY_COUNT;
 const VERTICAL_LINE_THICKNESS: u32 = 4;
 
-const WHITE: Rgba<u8> = Rgba([255, 255, 255, 255]);
-const GRAY: Rgba<u8> = Rgba([128, 128, 128, 255]);
-const DARK_GRAY: Rgba<u8> = Rgba([64, 64, 64, 255]);
-const BLACK: Rgba<u8> = Rgba([0, 0, 0, 255]);
+const WHITE: Rgb<u8> = Rgb([255, 255, 255]);
+const GRAY: Rgb<u8> = Rgb([128, 128, 128]);
+const DARK_GRAY: Rgb<u8> = Rgb([64, 64, 64]);
+const BLACK: Rgb<u8> = Rgb([0, 0, 0]);
 
 pub fn save_timetable_image(timetable: &Timetable, file_path: PathBuf) {
   let day_start = NaiveTime::from_hms_opt(8, 0, 0).unwrap();
@@ -56,7 +56,7 @@ fn draw_timetable_base_cached(canvas_height: u32, hours: i64, day_start: NaiveTi
 fn draw_courses(
   timetable: &Timetable,
   day_start: NaiveTime,
-  img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
+  img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
 ) {
   for course in &timetable.courses {
     // TODO: temporary, remove when theres a struct for new courses with no timetable info
@@ -96,7 +96,7 @@ fn draw_courses(
   }
 }
 
-fn draw_days_with_lines(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, canvas_height: u32) {
+fn draw_days_with_lines(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, canvas_height: u32) {
   for day_seperator in 0..DAY_COUNT {
     let start_x = day_seperator * DAY_WIDTH + TIMES_WIDTH;
     draw_thick_line(
@@ -120,7 +120,7 @@ fn draw_days_with_lines(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, canvas_height:
   }
 }
 
-fn draw_half_hour_lines(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, hours: i64) {
+fn draw_half_hour_lines(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, hours: i64) {
   for hour in 0..hours * 2 {
     let y = HEADER_HEIGHT as f32 + hour as f32 * 30f32 * MINUTE_HEIGHT;
     draw_thick_line(img, (0, y as u32), (CANVAS_WIDTH, y as u32), 2, DARK_GRAY);
@@ -128,7 +128,7 @@ fn draw_half_hour_lines(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, hours: i64) {
 }
 
 fn draw_hours_with_lines(
-  img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
+  img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
   hours: i64,
   day_start: NaiveTime,
 ) {
@@ -148,7 +148,7 @@ fn draw_hours_with_lines(
   }
 }
 
-fn clear(img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, canvas_height: u32) {
+fn clear(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, canvas_height: u32) {
   drawing::draw_filled_rect_mut(
     img,
     Rect::at(0, 0).of_size(CANVAS_WIDTH, canvas_height),
@@ -179,7 +179,7 @@ fn get_font<'a>() -> Font<'a> {
   font
 }
 
-fn color_hash(course_code: &str) -> Rgba<u8> {
+fn color_hash(course_code: &str) -> Rgb<u8> {
   let mut hasher = DefaultHasher::new();
   course_code.hash(&mut hasher);
   let hash = hasher.finish();
@@ -187,5 +187,5 @@ fn color_hash(course_code: &str) -> Rgba<u8> {
   let red = (hash & 0xFF) as u8;
   let green = ((hash >> 8) & 0xFF) as u8;
   let blue = ((hash >> 16) & 0xFF) as u8;
-  Rgba([red, green, blue, 255])
+  Rgb([red, green, blue])
 }
