@@ -3,7 +3,7 @@ use std::{
   slice::Iter,
 };
 
-use calamine::{DataType, Reader, Xlsx};
+use calamine::{Data, DataType as _, Reader, Xlsx};
 use chrono::{NaiveTime, Weekday};
 use itertools::Itertools;
 
@@ -20,7 +20,10 @@ pub fn parse_subjects<R: BufRead + Seek>(excel: &mut Xlsx<R>) -> Vec<Subject> {
   subjects
 }
 
-pub fn parse_courses<R: BufRead + Seek>(subject_name: &str, excel: &mut Xlsx<R>) -> Vec<OneOfCourse> {
+pub fn parse_courses<R: BufRead + Seek>(
+  subject_name: &str,
+  excel: &mut Xlsx<R>,
+) -> Vec<OneOfCourse> {
   let sheet = &excel.worksheets()[0].1;
   let courses = sheet
     .rows()
@@ -35,7 +38,7 @@ pub fn parse_courses<R: BufRead + Seek>(subject_name: &str, excel: &mut Xlsx<R>)
   courses
 }
 
-fn parse_subject(row: &[DataType]) -> Subject {
+fn parse_subject(row: &[Data]) -> Subject {
   let mut r = row.iter();
 
   let name = cell(&mut r);
@@ -67,7 +70,7 @@ fn parse_subject(row: &[DataType]) -> Subject {
   }
 }
 
-fn parse_course(subject_name: String, row: &[DataType]) -> Course {
+fn parse_course(subject_name: String, row: &[Data]) -> Course {
   let mut r = row.iter();
 
   let code = cell(&mut r);
@@ -161,11 +164,11 @@ fn parse_weekday(weekday_str: &str) -> Weekday {
   }
 }
 
-fn cell(row: &mut Iter<'_, DataType>) -> String {
+fn cell(row: &mut Iter<'_, Data>) -> String {
   row.next().unwrap().as_string().unwrap()
 }
 
-fn cell_opt(row: &mut Iter<'_, DataType>) -> Option<String> {
+fn cell_opt(row: &mut Iter<'_, Data>) -> Option<String> {
   let c = cell(row);
   if c.is_empty() {
     None
@@ -174,7 +177,7 @@ fn cell_opt(row: &mut Iter<'_, DataType>) -> Option<String> {
   }
 }
 
-fn cell_bool(row: &mut Iter<'_, DataType>) -> bool {
+fn cell_bool(row: &mut Iter<'_, Data>) -> bool {
   let value = cell(row);
   match value.as_str() {
     "Nem" => false,
@@ -183,10 +186,10 @@ fn cell_bool(row: &mut Iter<'_, DataType>) -> bool {
   }
 }
 
-fn cell_num(row: &mut Iter<'_, DataType>) -> u32 {
+fn cell_num(row: &mut Iter<'_, Data>) -> u32 {
   cell(row).parse::<u32>().unwrap()
 }
 
-fn cell_num_opt(row: &mut Iter<'_, DataType>) -> Option<u32> {
+fn cell_num_opt(row: &mut Iter<'_, Data>) -> Option<u32> {
   cell_opt(row).map(|n| n.parse::<u32>().unwrap())
 }

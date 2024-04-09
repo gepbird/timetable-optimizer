@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 timetable-optimizer-lib = { path = "../lib" }
 cached = "0.47.0"
-calamine = "0.23.1"
+calamine = "0.24.0"
 chrono = { version = "0.4.31", features = ["serde"] }
 image = "0.24.7"
 imageproc = "0.23.0"
