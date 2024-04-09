@@ -4,14 +4,11 @@ use std::path::PathBuf;
 
 use cached::proc_macro::cached;
 use chrono::{Duration, NaiveTime, Weekday};
-use image::{ImageBuffer, Rgb};
+use image::{RgbImage, Rgb};
 use imageproc::{drawing, rect::Rect};
 use rusttype::{Font, Scale};
 
 use timetable_optimizer_lib::data::Timetable;
-
-type Color = Rgb<u8>;
-type Image = ImageBuffer<Color, Vec<u8>>;
 
 const HEADER_HEIGHT: u32 = 50;
 const TIMES_WIDTH: u32 = 100;
@@ -42,8 +39,8 @@ pub fn save_timetable_image(timetable: &Timetable, file_path: PathBuf) {
 }
 
 #[cached]
-fn draw_timetable_base_cached(canvas_height: u32, hours: i64, day_start: NaiveTime) -> Image {
-  let mut img = Image::new(CANVAS_WIDTH, canvas_height);
+fn draw_timetable_base_cached(canvas_height: u32, hours: i64, day_start: NaiveTime) -> RgbImage {
+  let mut img = RgbImage::new(CANVAS_WIDTH, canvas_height);
 
   clear(&mut img, canvas_height);
   draw_hours_with_lines(&mut img, hours, day_start);
@@ -53,11 +50,7 @@ fn draw_timetable_base_cached(canvas_height: u32, hours: i64, day_start: NaiveTi
   img
 }
 
-fn draw_courses(
-  timetable: &Timetable,
-  day_start: NaiveTime,
-  img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
-) {
+fn draw_courses(timetable: &Timetable, day_start: NaiveTime, img: &mut RgbImage) {
   for course in &timetable.courses {
     // TODO: temporary, remove when theres a struct for new courses with no timetable info
     if course.occurrence.start_time == NaiveTime::from_hms_opt(0, 0, 0).unwrap() {
@@ -96,7 +89,7 @@ fn draw_courses(
   }
 }
 
-fn draw_days_with_lines(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, canvas_height: u32) {
+fn draw_days_with_lines(img: &mut RgbImage, canvas_height: u32) {
   for day_seperator in 0..DAY_COUNT {
     let start_x = day_seperator * DAY_WIDTH + TIMES_WIDTH;
     draw_thick_line(
@@ -120,18 +113,14 @@ fn draw_days_with_lines(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, canvas_height: 
   }
 }
 
-fn draw_half_hour_lines(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, hours: i64) {
+fn draw_half_hour_lines(img: &mut RgbImage, hours: i64) {
   for hour in 0..hours * 2 {
     let y = HEADER_HEIGHT as f32 + hour as f32 * 30f32 * MINUTE_HEIGHT;
     draw_thick_line(img, (0, y as u32), (CANVAS_WIDTH, y as u32), 2, DARK_GRAY);
   }
 }
 
-fn draw_hours_with_lines(
-  img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
-  hours: i64,
-  day_start: NaiveTime,
-) {
+fn draw_hours_with_lines(img: &mut RgbImage, hours: i64, day_start: NaiveTime) {
   for hour in 0..hours {
     let y = HEADER_HEIGHT as f32 + hour as f32 * 60f32 * MINUTE_HEIGHT;
     let time = day_start + Duration::hours(hour);
@@ -148,7 +137,7 @@ fn draw_hours_with_lines(
   }
 }
 
-fn clear(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, canvas_height: u32) {
+fn clear(img: &mut RgbImage, canvas_height: u32) {
   drawing::draw_filled_rect_mut(
     img,
     Rect::at(0, 0).of_size(CANVAS_WIDTH, canvas_height),
@@ -157,11 +146,11 @@ fn clear(img: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, canvas_height: u32) {
 }
 
 fn draw_thick_line(
-  img: &mut Image,
+  img: &mut RgbImage,
   start: (u32, u32),
   end: (u32, u32),
   thickness: u32,
-  color: Color,
+  color: Rgb<u8>,
 ) {
   let half_thick = thickness / 2;
   let is_horizontal = start.1 == end.1;
