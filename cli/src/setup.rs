@@ -4,7 +4,6 @@ use std::{
 };
 
 use calamine::Xlsx;
-use itertools::Itertools;
 
 use timetable_optimizer_lib::{
   data::{OneOfCourse, Subject},
@@ -39,12 +38,11 @@ pub fn import_subjects() -> Vec<Subject> {
 }
 
 fn import_courses(subject_name: &str) -> Option<Vec<OneOfCourse>> {
-  read_xlsx(&format!("{subject_name} courses")).map(|mut excel| {
-    excel_parser::parse_courses(subject_name, &mut excel)
-  })
+  read_xlsx(&format!("{subject_name} courses"))
+    .map(|mut excel| excel_parser::parse_courses(subject_name, &mut excel))
 }
 
-fn read_xlsx<'a>(data_name: &str) -> Option<Xlsx<BufReader<File>>> {
+fn read_xlsx(data_name: &str) -> Option<Xlsx<BufReader<File>>> {
   print!("Enter {data_name}: ");
   io::stdout().flush().unwrap();
   let mut dirty_path = String::new();

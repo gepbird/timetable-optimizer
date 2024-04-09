@@ -5,7 +5,8 @@ use itertools::Itertools;
 use timetable_optimizer_lib::data::Timetable;
 
 pub fn save_course_codes(timetable: &Timetable, file_path: PathBuf) {
-  let course_codes = timetable.courses
+  let course_codes = timetable
+    .courses
     .iter()
     .map(|course| course.code.clone())
     .join("\n");

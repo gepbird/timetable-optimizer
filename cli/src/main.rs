@@ -1,15 +1,15 @@
 use std::env;
 
-use timetable_optimizer_lib::data::{Course, Subject, Timetable};
 use itertools::Itertools;
 use permutator::CartesianProduct;
+use timetable_optimizer_lib::data::{Course, Subject, Timetable};
 
 mod export;
 mod filter;
 mod sample_data;
 mod setup;
 
-pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>> {
+pub fn generate_timetables<'a>(subjects: &'a [Subject]) -> Vec<Timetable<'a>> {
   let one_of_courses: Vec<Vec<&'a Course>> = subjects
     .iter()
     .flat_map(|subject| &subject.courses)
@@ -26,7 +26,7 @@ pub fn generate_timetables<'a>(subjects: &'a Vec<Subject>) -> Vec<Timetable<'a>>
       Timetable::new(
         i as u32,
         cp.into_iter()
-          .map(|&course| course)
+          .copied()
           .sorted_by_key(|course| course.occurrence.start_time)
           .sorted_by_key(|course| course.occurrence.weekday as u8)
           .collect::<Vec<&'a Course>>(),

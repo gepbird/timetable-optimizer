@@ -80,6 +80,7 @@ pub struct Course {
 }
 
 impl Course {
+  #[allow(clippy::too_many_arguments)]
   pub fn new(
     subject_name: String,
     code: String,

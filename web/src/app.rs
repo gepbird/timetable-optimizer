@@ -72,8 +72,7 @@ impl Component for App {
           .as_mut()
           .unwrap()
           .iter_mut()
-          .filter(|s| s.name == subject_name)
-          .next()
+          .find(|s| s.name == subject_name)
           .unwrap();
         subject.courses = excel_parser::parse_courses(subject_name.as_str(), &mut excel);
         true
@@ -140,7 +139,7 @@ impl App {
 
     html! {
       if let Some(subjects) = &self.subjects {
-        { for subjects.into_iter().map(|s| {
+        { for subjects.iter().map(|s| {
           html! {
             <div class="my-6">
               <label>{ format!("Courses for {}:", &s.name) }</label>
@@ -159,12 +158,11 @@ impl App {
       .as_ref()
       .unwrap()
       .iter()
-      .filter(|s| s.name == subject_name)
-      .next()
+      .find(|s| s.name == subject_name)
       .unwrap();
     let courses: Vec<&Course> = subject.courses.iter().flatten().collect();
     html! {
-      if courses.len() > 0 {
+      if !courses.is_empty() {
         <table>
           <thead>
             <tr>
@@ -187,7 +185,7 @@ impl App {
             }) }
           </tbody>
         </table>
-      } 
+      }
     }
   }
 }

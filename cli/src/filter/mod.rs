@@ -32,7 +32,7 @@ where
 }
 
 fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
-  let parsers: &[fn(&str) -> Option<Result<Box<dyn Filter>, String>>] = &[
+  let parsers = &[
     min_start_time::try_parse,
     max_end_time::try_parse,
     free_workdays::try_parse,
@@ -42,7 +42,7 @@ fn parse_filter(spec: &str) -> Result<Box<dyn Filter>, String> {
   ];
 
   parsers
-    .into_iter()
+    .iter()
     .find_map(|parser| parser(spec))
     .ok_or_else(|| format!("Invalid filter specification: {spec}"))?
 }
@@ -59,7 +59,7 @@ pub fn prompt_filters() -> Vec<Box<dyn Filter>> {
     .trim()
     .split(' ')
     .filter(|spec| !spec.is_empty())
-    .map(|spec| parse_filter(spec))
+    .map(parse_filter)
     .collect();
 
   match filters_parsed {

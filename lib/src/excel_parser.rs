@@ -11,12 +11,7 @@ use crate::data::{Course, CourseType, Enrollment, Occurrence, OneOfCourse, Subje
 
 pub fn parse_subjects<R: BufRead + Seek>(excel: &mut Xlsx<R>) -> Vec<Subject> {
   let sheet = &excel.worksheets()[0].1;
-  let subjects = sheet
-    .rows()
-    .into_iter()
-    .skip(1)
-    .map(parse_subject)
-    .collect_vec();
+  let subjects = sheet.rows().skip(1).map(parse_subject).collect_vec();
   subjects
 }
 
@@ -27,7 +22,6 @@ pub fn parse_courses<R: BufRead + Seek>(
   let sheet = &excel.worksheets()[0].1;
   let courses = sheet
     .rows()
-    .into_iter()
     .skip(1)
     .map(|course| parse_course(subject_name.to_string(), course))
     .sorted_by_key(|course| course.course_type)
@@ -140,7 +134,7 @@ fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
   let parse_time = |str| NaiveTime::parse_from_str(str, "%H:%M").unwrap();
   let start_time = parse_time(start_str);
   let end_time = parse_time(end_str);
-  return (
+  (
     Occurrence {
       weeks: None,
       weekday,
@@ -148,7 +142,7 @@ fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
       end_time,
     },
     loc.to_string(),
-  );
+  )
 }
 
 fn parse_weekday(weekday_str: &str) -> Weekday {

@@ -1,7 +1,7 @@
 use chrono::NaiveTime;
 
-use timetable_optimizer_lib::data::Timetable;
 use crate::filter::{self, Filter};
+use timetable_optimizer_lib::data::Timetable;
 
 struct MinStartTimeFilter(NaiveTime);
 

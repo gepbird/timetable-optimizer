@@ -108,7 +108,7 @@ fn draw_days_with_lines(img: &mut RgbImage, canvas_height: u32) {
       img,
       WHITE,
       start_x as i32 + 10,
-      10 as i32,
+      10_i32,
       PxScale { x: 30.0, y: 30.0 },
       &get_font(),
       &day_name,

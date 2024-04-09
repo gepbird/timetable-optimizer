@@ -1,7 +1,7 @@
 use chrono::{NaiveTime, Weekday};
 
-use timetable_optimizer_lib::data::Timetable;
 use crate::filter::{self, Filter};
+use timetable_optimizer_lib::data::Timetable;
 
 struct NoCourseBetweenFilter {
   pub weekday: Weekday,
@@ -19,7 +19,9 @@ pub fn try_parse(spec: &str) -> Option<Result<Box<dyn Filter>, String>> {
     };
     let weekday = token()?;
     Ok(NoCourseBetweenFilter {
-      weekday: weekday.parse::<Weekday>().map_err(|_| format!("Invalid weekday: {weekday}"))?,
+      weekday: weekday
+        .parse::<Weekday>()
+        .map_err(|_| format!("Invalid weekday: {weekday}"))?,
       start: NaiveTime::parse_from_str(token()?, "%H:%M")
         .map_err(|_| format!("Invalid time: {value}"))?,
       end: NaiveTime::parse_from_str(token()?, "%H:%M")

@@ -33,16 +33,16 @@ pub fn save_filtered(timetables: &mut [Timetable]) {
     let hash = timetable.hash();
     let store_item = store.join(hash);
 
-    let json_store = store_item.join(format!("timetable.json"));
-    let course_codes_store = store_item.join(format!("timetable.txt"));
+    let json_store = store_item.join("timetable.json");
+    let course_codes_store = store_item.join("timetable.txt");
     let image_store = store_item.join(format!("timetable.{img_ext}"));
     let json_filtered = filtered.join(format!("json/timetable_{id}.json"));
     let course_code_filtered = filtered.join(format!("course-code/timetable_{id}.txt"));
     let image_filtered = filtered.join(format!("image/timetable_{id}.{img_ext}"));
 
-    unix_fs::symlink(&json_store, &json_filtered).unwrap();
-    unix_fs::symlink(&course_codes_store, &course_code_filtered).unwrap();
-    unix_fs::symlink(&image_store, &image_filtered).unwrap();
+    unix_fs::symlink(&json_store, json_filtered).unwrap();
+    unix_fs::symlink(&course_codes_store, course_code_filtered).unwrap();
+    unix_fs::symlink(&image_store, image_filtered).unwrap();
 
     if !store_item.exists() {
       fs::create_dir(&store_item).unwrap();
@@ -59,7 +59,7 @@ pub fn save_filtered(timetables: &mut [Timetable]) {
 
 fn make_cleaned_dirs(dirs: &[&PathBuf]) {
   for subdir in dirs {
-    fs::create_dir_all(&subdir).ok();
+    fs::create_dir_all(subdir).ok();
     for entry in fs::read_dir(subdir).unwrap() {
       fs::remove_file(entry.unwrap().path()).unwrap();
     }
