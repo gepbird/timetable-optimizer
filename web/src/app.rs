@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::io::Cursor;
 
 use calamine::Xlsx;
-use gloo::file::callbacks::FileReader;
+use gloo::storage::{LocalStorage, Storage};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -10,7 +10,7 @@ use timetable_optimizer_lib::data::{Course, Subject};
 use timetable_optimizer_lib::excel_parser;
 
 pub struct App {
-  readers: HashMap<String, FileReader>,
+  readers: HashMap<String, gloo::file::callbacks::FileReader>,
   subjects: Option<Vec<Subject>>,
 }
 
@@ -28,7 +28,7 @@ impl Component for App {
   fn create(_ctx: &Context<Self>) -> Self {
     App {
       readers: HashMap::default(),
-      subjects: None,
+      subjects: Self::load_subjects(),
     }
   }
 
@@ -48,6 +48,7 @@ impl Component for App {
         let cursor = Cursor::new(bytes);
         let mut excel: Xlsx<_> = calamine::open_workbook_from_rs(cursor).unwrap();
         self.subjects = Some(excel_parser::parse_subjects(&mut excel));
+        self.save_subjects();
         true
       }
       Msg::CourseUploaded(subject_name, file) => {
@@ -75,6 +76,7 @@ impl Component for App {
           .find(|s| s.name == subject_name)
           .unwrap();
         subject.courses = excel_parser::parse_courses(subject_name.as_str(), &mut excel);
+        self.save_subjects();
         true
       }
     }
@@ -186,6 +188,20 @@ impl App {
           </tbody>
         </table>
       }
+    }
+  }
+
+  fn save_subjects(&self) {
+    let subjects = serde_json::to_string(&self.subjects).unwrap();
+    LocalStorage::set("subjects", subjects).unwrap();
+  }
+
+  fn load_subjects() -> Option<Vec<Subject>> {
+    match LocalStorage::get::<String>("subjects") {
+      Ok(subjects) => {
+        Some(serde_json::from_str::<Vec<Subject>>(&subjects).unwrap())
+      }
+      Err(_) => None,
     }
   }
 }

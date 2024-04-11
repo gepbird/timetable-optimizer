@@ -2437,6 +2437,7 @@ dependencies = [
  "calamine",
  "gloo 0.11.0",
  "js-sys",
+ "serde_json",
  "timetable-optimizer-lib",
  "web-sys",
  "yew",
