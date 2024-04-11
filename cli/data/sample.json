@@ -1,16 +1,6 @@
 [
   {
     "name": "Electronics Basic",
-    "code": "NKXEAIEBNF",
-    "group_name": null,
-    "number": null,
-    "recommended_semester": 1,
-    "credits": 5,
-    "subject_type": "Kötelező törzsanyag",
-    "comment": null,
-    "completed": false,
-    "enrolled": false,
-    "queue": null,
     "courses": [
       [
         {
@@ -130,16 +120,6 @@
   },
   {
     "name": "Basic Mathematics",
-    "code": "NMXMA1EBNF",
-    "group_name": null,
-    "number": null,
-    "recommended_semester": 1,
-    "credits": 6,
-    "subject_type": "Kötelező törzsanyag",
-    "comment": null,
-    "completed": false,
-    "enrolled": false,
-    "queue": null,
     "courses": [
       [
         {
@@ -237,16 +217,6 @@
   },
   {
     "name": "Learning Methodology",
-    "code": "NBXTM1EBNF",
-    "group_name": null,
-    "number": null,
-    "recommended_semester": 1,
-    "credits": 6,
-    "subject_type": "Kötelező törzsanyag",
-    "comment": null,
-    "completed": false,
-    "enrolled": false,
-    "queue": null,
     "courses": [
       [
         {
@@ -300,16 +270,6 @@
   },
   {
     "name": "Mentoring",
-    "code": "NDIPT1EBNF",
-    "group_name": null,
-    "number": null,
-    "recommended_semester": 1,
-    "credits": 0,
-    "subject_type": "Kötelező törzsanyag",
-    "comment": null,
-    "completed": false,
-    "enrolled": false,
-    "queue": null,
     "courses": [
       [
         {
@@ -339,16 +299,6 @@
   },
   {
     "name": "Problemsolving using programming",
-    "code": "NSXPP1EBNF",
-    "group_name": null,
-    "number": null,
-    "recommended_semester": 1,
-    "credits": 6,
-    "subject_type": "Kötelező törzsanyag",
-    "comment": null,
-    "completed": false,
-    "enrolled": false,
-    "queue": null,
     "courses": [
       [
         {
@@ -468,16 +418,6 @@
   },
   {
     "name": "Mathematical Foundations of Informatics",
-    "code": "NMXIMAEBNF",
-    "group_name": null,
-    "number": null,
-    "recommended_semester": 1,
-    "credits": 6,
-    "subject_type": "Kötelező törzsanyag",
-    "comment": null,
-    "completed": false,
-    "enrolled": false,
-    "queue": null,
     "courses": [
       [
         {

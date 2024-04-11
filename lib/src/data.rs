@@ -11,16 +11,6 @@ use sha2::{
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Subject {
   pub name: String,
-  pub code: String,
-  pub group_name: Option<String>,
-  pub number: Option<u32>,
-  pub recommended_semester: Option<u32>,
-  pub credits: u32,
-  pub subject_type: Option<String>,
-  pub comment: Option<String>,
-  pub completed: bool,
-  pub enrolled: bool,
-  pub queue: Option<String>,
   pub courses: Vec<OneOfCourse>,
 }
 

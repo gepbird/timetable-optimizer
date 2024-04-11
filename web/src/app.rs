@@ -110,18 +110,12 @@ impl App {
           <thead>
             <tr>
               <th>{ "Name" }</th>
-              <th>{ "Code" }</th>
-              <th>{ "Recommended semester" }</th>
-              <th>{ "Credits" }</th>
             </tr>
           </thead>
           <tbody>
             { for subjects.iter().map(|s| html! {
               <tr>
                 <td>{ &s.name }</td>
-                <td>{ &s.code }</td>
-                <td>{ &s.recommended_semester.map_or("N/A".to_owned(), |v| v.to_string()) }</td>
-                <td>{ s.credits }</td>
               </tr>
             }) }
           </tbody>

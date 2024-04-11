@@ -37,29 +37,9 @@ fn parse_subject(row: &[Data]) -> Subject {
 
   let name = cell(&mut r);
   let courses = Vec::default();
-  let code = cell(&mut r);
-  let group_name = cell_opt(&mut r);
-  let number = cell_num_opt(&mut r);
-  let recommended_semester = cell_num_opt(&mut r);
-  let credits = cell_num(&mut r);
-  let subject_type = cell_opt(&mut r);
-  let comment = cell_opt(&mut r);
-  let completed = cell_bool(&mut r);
-  let enrolled = cell_bool(&mut r);
-  let queue = cell_opt(&mut r);
 
   Subject {
     name,
-    code,
-    group_name,
-    number,
-    recommended_semester,
-    credits,
-    subject_type,
-    comment,
-    completed,
-    enrolled,
-    queue,
     courses,
   }
 }
@@ -160,30 +140,4 @@ fn parse_weekday(weekday_str: &str) -> Weekday {
 
 fn cell(row: &mut Iter<'_, Data>) -> String {
   row.next().unwrap().as_string().unwrap()
-}
-
-fn cell_opt(row: &mut Iter<'_, Data>) -> Option<String> {
-  let c = cell(row);
-  if c.is_empty() {
-    None
-  } else {
-    Some(c)
-  }
-}
-
-fn cell_bool(row: &mut Iter<'_, Data>) -> bool {
-  let value = cell(row);
-  match value.as_str() {
-    "Nem" => false,
-    "Igen" => true,
-    _ => panic!("Invalid boolean value {value}"),
-  }
-}
-
-fn cell_num(row: &mut Iter<'_, Data>) -> u32 {
-  cell(row).parse::<u32>().unwrap()
-}
-
-fn cell_num_opt(row: &mut Iter<'_, Data>) -> Option<u32> {
-  cell_opt(row).map(|n| n.parse::<u32>().unwrap())
 }
