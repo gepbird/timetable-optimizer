@@ -22,6 +22,8 @@ where
   F: FnOnce(&str) -> Result<T, String>,
   T: Filter + 'static,
 {
+  // TODO: remove when fixed: https://github.com/rust-lang/rust-clippy/issues/12659
+  #[allow(clippy::manual_map)]
   match spec.strip_prefix(&(key.to_string() + "=")) {
     Some(value) => Some(match parse_fn(value) {
       Ok(filter) => Ok(Box::new(filter)),
