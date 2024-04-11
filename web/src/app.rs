@@ -7,7 +7,7 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use timetable_optimizer_lib::data::{Course, Subject};
-use timetable_optimizer_lib::excel_parser;
+use timetable_optimizer_lib::{excel_parser, stats};
 
 pub struct App {
   readers: HashMap<String, gloo::file::callbacks::FileReader>,
@@ -97,6 +97,7 @@ impl Component for App {
         <input type="file" onchange={on_subject_change} />
         { self.view_subjects() }
         { self.view_all_courses(ctx) }
+        { self.view_stats() }
       </main>
     }
   }
@@ -191,6 +192,17 @@ impl App {
     }
   }
 
+  fn view_stats(&self) -> Html {
+    html! {
+      if let Some(subjects) = &self.subjects {
+        <h1>{ "Statistics" }</h1>
+        <p>{ format!("Total courses inputted: {}", stats::count_all_courses(subjects)) }</p>
+        <p>{ format!("Total courses in a timetable: {}", stats::count_course_per_timetable(subjects)) }</p>
+        <p>{ format!("Total possible timetables: {}", stats::count_all_timetables(subjects)) }</p>
+      }
+    }
+  }
+
   fn save_subjects(&self) {
     let subjects = serde_json::to_string(&self.subjects).unwrap();
     LocalStorage::set("subjects", subjects).unwrap();
@@ -198,9 +210,7 @@ impl App {
 
   fn load_subjects() -> Option<Vec<Subject>> {
     match LocalStorage::get::<String>("subjects") {
-      Ok(subjects) => {
-        Some(serde_json::from_str::<Vec<Subject>>(&subjects).unwrap())
-      }
+      Ok(subjects) => Some(serde_json::from_str::<Vec<Subject>>(&subjects).unwrap()),
       Err(_) => None,
     }
   }
