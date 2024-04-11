@@ -1,35 +1,21 @@
 use std::{
-  fs::File,
-  io::{self, BufReader, Write},
+  io::{self, Write},
+  path::Path,
 };
 
 use calamine::Xlsx;
 
-use timetable_optimizer_lib::{
-  data::{OneOfCourse, Subject},
-  excel_parser,
-};
+use timetable_optimizer_lib::{data::Subject, excel_parser};
 
 pub fn setup() -> Vec<Subject> {
-  let mut subjects = import_subjects();
-  for subject in subjects.iter_mut() {
-    if let Some(courses) = import_courses(&subject.name) {
-      subject.courses = courses;
-    }
-  }
-  subjects
-}
-
-pub fn import_subjects() -> Vec<Subject> {
-  println!("Started importing subjects and courses");
-  println!("When prompted, export the appropriate data from Neptun to an Excel file and drag and drop the file here");
-  println!("Leave the prompt empty to skip importing that data");
+  println!("Export the courses from each subject from Neptun to an Excel file then drag and drop those file here");
+  println!("Leave the prompt empty to finish importing");
   println!("Don't import PE courses, use the no_course_between filter instead");
 
-  let subjects = match read_xlsx("subjects") {
-    Some(mut excel) => excel_parser::parse_subjects(&mut excel),
-    None => vec![],
-  };
+  let mut subjects = vec![];
+  while let Some(subject) = read_subject() {
+    subjects.push(subject);
+  }
 
   let subject_count = subjects.len();
   println!("Parsed and loaded {subject_count} subjects");
@@ -37,28 +23,30 @@ pub fn import_subjects() -> Vec<Subject> {
   subjects
 }
 
-fn import_courses(subject_name: &str) -> Option<Vec<OneOfCourse>> {
-  read_xlsx(&format!("{subject_name} courses"))
-    .map(|mut excel| excel_parser::parse_courses(subject_name, &mut excel))
-}
-
-fn read_xlsx(data_name: &str) -> Option<Xlsx<BufReader<File>>> {
-  print!("Enter {data_name}: ");
+fn read_subject() -> Option<Subject> {
+  print!("Enter courses for a subject: ");
   io::stdout().flush().unwrap();
   let mut dirty_path = String::new();
   io::stdin().read_line(&mut dirty_path).unwrap();
-  let path = dirty_path.trim().trim_matches('\'');
-  if path.is_empty() {
+  let path_str = dirty_path.trim().trim_matches('\'');
+  if path_str.is_empty() {
     return None;
   }
 
-  let excel: Xlsx<_> = match calamine::open_workbook(path) {
+  let mut excel: Xlsx<_> = match calamine::open_workbook(path_str) {
     Ok(excel) => excel,
     Err(err) => {
       eprintln!("Failed to open excel file: {}", err);
-      return read_xlsx(data_name);
+      return read_subject();
     }
   };
 
-  Some(excel)
+  let path = Path::new(path_str);
+  let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+  let courses = excel_parser::parse_courses(&file_name, &mut excel);
+  let subject = Subject {
+    name: file_name,
+    courses,
+  };
+  Some(subject)
 }
