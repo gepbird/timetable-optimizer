@@ -17,6 +17,7 @@ pub struct App {
 pub enum Msg {
   CoursesUploaded(Vec<gloo::file::File>),
   CourseProcessed(String, Vec<u8>),
+  DeleteCourse(String),
 }
 
 impl Component for App {
@@ -53,6 +54,22 @@ impl Component for App {
         self.save_subjects();
         true
       }
+      Msg::DeleteCourse(course_code) => {
+        let course = self
+          .subjects
+          .iter_mut()
+          .find_map(|subject| {
+            subject.courses.iter_mut().find_map(|one_of_courses| {
+              one_of_courses
+                .iter_mut()
+                .find(|course| course.code == course_code)
+            })
+          })
+          .unwrap();
+        course.is_deleted = true;
+        self.save_subjects();
+        true
+      }
     }
   }
 
@@ -71,33 +88,34 @@ impl Component for App {
       <main class="min-h-screen bg-gray-800 text-white">
         <label>{ "Subjects:" }</label>
         <input type="file" multiple=true onchange={on_courses_change} />
-        { self.view_all_courses() }
+        { self.view_all_courses(ctx) }
         { self.view_stats() }
       </main>
     }
   }
 }
 impl App {
-  fn view_all_courses(&self) -> Html {
+  fn view_all_courses(&self, ctx: &Context<Self>) -> Html {
     html! {
       { for self.subjects.iter().map(|s| {
         html! {
           <div class="my-6">
             <h2>{ &s.name }</h2>
-            { self.view_courses(&s.courses) }
+            { Self::view_courses(ctx, &s.courses) }
           </div>
         }
       }) }
     }
   }
 
-  fn view_courses(&self, courses: &[Vec<Course>]) -> Html {
+  fn view_courses(ctx: &Context<Self>, courses: &[Vec<Course>]) -> Html {
     let courses: Vec<&Course> = courses.iter().flatten().collect();
     html! {
       if !courses.is_empty() {
         <table>
           <thead>
             <tr>
+              <th></th>
               <th>{ "Code" }</th>
               <th>{ "Type" }</th>
               <th>{ "Location" }</th>
@@ -106,18 +124,29 @@ impl App {
             </tr>
           </thead>
           <tbody>
-            { for courses.into_iter().map(|c| html! {
-              <tr>
-                <td>{ &c.code }</td>
-                <td>{ &c.course_type.to_string() }</td>
-                <td>{ &c.location }</td>
-                <td>{ &c.occurrence.to_string() }</td>
-                <td>{ &c.teacher }</td>
-              </tr>
-            }) }
+            { for courses.into_iter().filter(|c| !c.is_deleted).map(|c| Self::view_course(ctx, c)) }
           </tbody>
         </table>
       }
+    }
+  }
+
+  fn view_course(ctx: &Context<Self>, c: &Course) -> Html {
+    let code = c.code.clone();
+    let on_delete_click = ctx
+      .link()
+      .callback(move |_: MouseEvent| Msg::DeleteCourse(code.clone()));
+    html! {
+      <tr>
+        <td>
+          <button onclick={on_delete_click}>{ "Delete" }</button>
+        </td>
+        <td>{ &c.code }</td>
+        <td>{ &c.course_type.to_string() }</td>
+        <td>{ &c.location }</td>
+        <td>{ &c.occurrence.to_string() }</td>
+        <td>{ &c.teacher }</td>
+      </tr>
     }
   }
 

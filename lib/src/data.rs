@@ -67,6 +67,7 @@ pub struct Course {
   pub occurrence: Occurrence,
   #[serde(skip)]
   hash: GenericArray<u8, U32>,
+  pub is_deleted: bool,
 }
 
 impl Course {
@@ -97,6 +98,7 @@ impl Course {
       description,
       occurrence,
       hash: GenericArray::default(),
+      is_deleted: false,
     };
 
     course.update_hash();
