@@ -43,10 +43,6 @@ fn read_subject() -> Option<Subject> {
 
   let path = Path::new(path_str);
   let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
-  let courses = excel_parser::parse_courses(&file_name, &mut excel);
-  let subject = Subject {
-    name: file_name,
-    courses,
-  };
+  let subject = excel_parser::parse_subject(file_name, &mut excel);
   Some(subject)
 }

@@ -48,10 +48,7 @@ impl Component for App {
         self.readers.remove(&file_name);
         let cursor = Cursor::new(bytes);
         let mut excel: Xlsx<_> = calamine::open_workbook_from_rs(cursor).unwrap();
-        let subject = Subject {
-          name: file_name.clone(),
-          courses: excel_parser::parse_courses(file_name.as_str(), &mut excel),
-        };
+        let subject = excel_parser::parse_subject(file_name, &mut excel);
         self.subjects.push(subject);
         self.save_subjects();
         true
@@ -94,7 +91,7 @@ impl App {
     }
   }
 
-  fn view_courses(&self, courses: &Vec<Vec<Course>>) -> Html {
+  fn view_courses(&self, courses: &[Vec<Course>]) -> Html {
     let courses: Vec<&Course> = courses.iter().flatten().collect();
     html! {
       if !courses.is_empty() {
