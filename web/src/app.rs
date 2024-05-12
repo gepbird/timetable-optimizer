@@ -17,7 +17,7 @@ pub struct App {
 pub enum Msg {
   CoursesUploaded(Vec<gloo::file::File>),
   CourseProcessed(String, Vec<u8>),
-  DeleteCourse(String),
+  UpdateCourse(String, Box<dyn Fn(&mut Course)>),
 }
 
 impl Component for App {
@@ -54,7 +54,7 @@ impl Component for App {
         self.save_subjects();
         true
       }
-      Msg::DeleteCourse(course_code) => {
+      Msg::UpdateCourse(course_code, update_fn) => {
         let course = self
           .subjects
           .iter_mut()
@@ -66,7 +66,7 @@ impl Component for App {
             })
           })
           .unwrap();
-        course.is_deleted = true;
+        update_fn(course);
         self.save_subjects();
         true
       }
@@ -133,9 +133,9 @@ impl App {
 
   fn view_course(ctx: &Context<Self>, c: &Course) -> Html {
     let code = c.code.clone();
-    let on_delete_click = ctx
-      .link()
-      .callback(move |_: MouseEvent| Msg::DeleteCourse(code.clone()));
+    let on_delete_click = ctx.link().callback(move |_: MouseEvent| {
+      Msg::UpdateCourse(code.clone(), Box::new(|c: &mut Course| c.is_deleted = true))
+    });
     html! {
       <tr>
         <td>
