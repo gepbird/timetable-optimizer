@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::io::Cursor;
 
+use boolinator::Boolinator;
 use calamine::Xlsx;
 use gloo::storage::{LocalStorage, Storage};
 use web_sys::HtmlInputElement;
@@ -136,10 +137,20 @@ impl App {
     let on_delete_click = ctx.link().callback(move |_: MouseEvent| {
       Msg::UpdateCourse(code.clone(), Box::new(|c: &mut Course| c.is_deleted = true))
     });
+    let code = c.code.clone();
+    let on_hide_show_click = ctx.link().callback(move |_: MouseEvent| {
+      Msg::UpdateCourse(
+        code.clone(),
+        Box::new(|c: &mut Course| c.is_hidden_by_user = !c.is_hidden_by_user),
+      )
+    });
     html! {
-      <tr>
+      <tr class={ classes!(c.is_hidden_by_user.as_some("opacity-50")) }>
         <td>
           <button onclick={on_delete_click}>{ "Delete" }</button>
+          <button onclick={on_hide_show_click}>{
+            if c.is_hidden_by_user { "Show" } else { "Hide" }
+          }</button>
         </td>
         <td>{ &c.code }</td>
         <td>{ &c.course_type.to_string() }</td>
