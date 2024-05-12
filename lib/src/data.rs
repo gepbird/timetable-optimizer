@@ -114,6 +114,10 @@ impl Course {
     let serialized = serde_json::to_string(&self).unwrap();
     self.hash = Sha256::digest(serialized.as_bytes());
   }
+
+  pub fn is_ignored(&self) -> bool {
+    self.is_deleted || self.is_hidden_by_user
+  }
 }
 
 #[derive(
