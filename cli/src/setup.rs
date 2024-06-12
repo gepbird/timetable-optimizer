@@ -10,7 +10,6 @@ use timetable_optimizer_lib::{data::Subject, excel_parser};
 pub fn setup() -> Vec<Subject> {
   println!("Export the courses from each subject from Neptun to an Excel file then drag and drop those file here");
   println!("Leave the prompt empty to finish importing");
-  println!("Don't import PE courses, use the no_course_between filter instead");
 
   let mut subjects = vec![];
   while let Some(subject) = read_subject() {

@@ -92,7 +92,11 @@ fn parse_occurrence_and_location(occ_and_loc: String) -> (Occurrence, String) {
       String::new(),
     );
   }
-  let (occ_str, loc) = occ_and_loc.split_once("  ").unwrap();
+  let (occ_str, loc) = occ_and_loc.split_once("  ").unwrap_or(
+    occ_and_loc
+      .split_once(' ')
+      .unwrap_or((occ_and_loc.as_str(), "N/A")),
+  );
   let (weekday_str, times_str) = occ_str.split_once(':').unwrap();
   let weekday = parse_weekday(weekday_str);
   let (start_str, end_str) = times_str.split_once('-').unwrap();
