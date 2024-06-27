@@ -3,8 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
-    # old trunk 0.18.8, with new version does
-    nixpkgs-trunk.url = "github:NixOS/nixpkgs?ref=ccaadda9dda7";
     flake-utils.url = "github:numtide/flake-utils"; # provides eachDefaultSystem
     rust-overlay.url = "github:oxalica/rust-overlay"; # provides common rust packages
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +16,6 @@
           (import inputs.rust-overlay)
         ];
         pkgs = import inputs.nixpkgs { inherit system overlays; };
-        pkgs-trunk = import inputs.nixpkgs-trunk { inherit system; };
       in
       {
         devShells.default = pkgs.mkShell {
@@ -29,7 +26,7 @@
             })
             cargo-watch
             cargo-edit
-            pkgs-trunk.trunk
+            trunk
             tailwindcss
           ];
         };
