@@ -28,7 +28,7 @@ impl Filter for FreeWorkdays {
     timetable
       .courses
       .iter()
-      .group_by(|timetable| timetable.occurrence.weekday)
+      .chunk_by(|timetable| timetable.occurrence.weekday)
       .into_iter()
       .filter(|(weekday, _courses)| workdays.contains(weekday))
       .count()

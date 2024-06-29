@@ -37,7 +37,7 @@ pub fn generate_timetables<'a>(subjects: &'a [Subject]) -> Vec<Timetable<'a>> {
       timetable
         .courses
         .iter()
-        .group_by(|course| course.occurrence.weekday)
+        .chunk_by(|course| course.occurrence.weekday)
         .into_iter()
         .all(|(_, courses)| {
           courses

@@ -20,7 +20,7 @@ impl Filter for MaxGapBetweenCoursesFilter {
     timetable
       .courses
       .iter()
-      .group_by(|course| course.occurrence.weekday)
+      .chunk_by(|course| course.occurrence.weekday)
       .into_iter()
       .all(|(_, courses)| {
         courses

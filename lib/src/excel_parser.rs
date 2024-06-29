@@ -19,7 +19,7 @@ pub fn parse_subject<R: BufRead + Seek>(
     .skip(1)
     .map(|course| parse_course(subject_name.clone(), course))
     .sorted_by_key(|course| course.course_type)
-    .group_by(|course| course.course_type)
+    .chunk_by(|course| course.course_type)
     .into_iter()
     .map(|(_type, courses)| courses.collect_vec())
     .collect_vec();
