@@ -51,7 +51,7 @@ impl<'a> Timetable<'a> {
   }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct Course {
   pub subject_name: String,
   pub code: String,
@@ -129,14 +129,14 @@ pub enum CourseType {
   Practice,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize, Default)]
 pub struct Enrollment {
   pub people_joined: u32,
   pub people_queue: u32,
   pub people_limit: u32,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct Occurrence {
   pub weeks: Option<Weeks>,
   pub weekday: Weekday,
@@ -150,7 +150,7 @@ impl Display for Occurrence {
   }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
 pub enum Weeks {
   Every,
