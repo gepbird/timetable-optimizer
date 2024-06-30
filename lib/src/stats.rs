@@ -11,7 +11,7 @@ pub fn count_all_courses(subjects: &[Subject]) -> u64 {
       subject
         .courses
         .iter()
-        .map(|one_of_courses| count_one_of_courses(one_of_courses))
+        .map(count_one_of_courses)
         .filter(|&count| count > 0)
         .sum::<u64>()
     })
@@ -38,7 +38,7 @@ pub fn count_all_timetables(subjects: &[Subject]) -> u64 {
       subject
         .courses
         .iter()
-        .map(|one_of_courses| count_one_of_courses(one_of_courses))
+        .map(count_one_of_courses)
         .filter(|&count| count > 0)
         .product::<u64>()
     })
