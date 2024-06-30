@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::io::Cursor;
 
-use boolinator::Boolinator;
 use calamine::Xlsx;
 use gloo::storage::{LocalStorage, Storage};
 use web_sys::HtmlInputElement;
@@ -9,6 +8,8 @@ use yew::prelude::*;
 
 use timetable_optimizer_lib::data::{Course, Subject};
 use timetable_optimizer_lib::{excel_parser, stats};
+
+use crate::course::CourseComponent;
 
 pub struct App {
   readers: HashMap<String, gloo::file::callbacks::FileReader>,
@@ -132,32 +133,18 @@ impl App {
     }
   }
 
-  fn view_course(ctx: &Context<Self>, c: &Course) -> Html {
-    let code = c.code.clone();
-    let on_delete_click = ctx.link().callback(move |_: MouseEvent| {
-      Msg::UpdateCourse(code.clone(), Box::new(|c: &mut Course| c.is_deleted = true))
+  fn view_course(ctx: &Context<Self>, course: &Course) -> Html {
+    let on_delete = ctx.link().callback(move |course_code: String| {
+      Msg::UpdateCourse(course_code, Box::new(|c: &mut Course| c.is_deleted = true))
     });
-    let code = c.code.clone();
-    let on_hide_show_click = ctx.link().callback(move |_: MouseEvent| {
+    let on_toggle_visibility = ctx.link().callback(move |course_code: String| {
       Msg::UpdateCourse(
-        code.clone(),
+        course_code,
         Box::new(|c: &mut Course| c.is_hidden_by_user = !c.is_hidden_by_user),
       )
     });
     html! {
-      <tr class={ classes!(c.is_hidden_by_user.as_some("opacity-50")) }>
-        <td>
-          <button onclick={on_delete_click}>{ "Delete" }</button>
-          <button onclick={on_hide_show_click}>{
-            if c.is_hidden_by_user { "Show" } else { "Hide" }
-          }</button>
-        </td>
-        <td>{ &c.code }</td>
-        <td>{ &c.course_type.to_string() }</td>
-        <td>{ &c.location }</td>
-        <td>{ &c.occurrence.to_string() }</td>
-        <td>{ &c.teacher }</td>
-      </tr>
+      <CourseComponent course={course.clone()} on_delete={on_delete} on_toggle_visibility={on_toggle_visibility} />
     }
   }
 

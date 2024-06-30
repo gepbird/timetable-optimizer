@@ -1,4 +1,5 @@
 mod app;
+mod course;
 
 use app::App;
 
