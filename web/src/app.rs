@@ -9,7 +9,7 @@ use yew::prelude::*;
 use timetable_optimizer_lib::data::{Course, Subject};
 use timetable_optimizer_lib::{excel_parser, stats};
 
-use crate::course::CourseComponent;
+use crate::subject::SubjectComponent;
 
 pub struct App {
   readers: HashMap<String, gloo::file::callbacks::FileReader>,
@@ -98,42 +98,6 @@ impl Component for App {
 }
 impl App {
   fn view_all_courses(&self, ctx: &Context<Self>) -> Html {
-    html! {
-      { for self.subjects.iter().map(|s| {
-        html! {
-          <div class="my-6">
-            <h2>{ &s.name }</h2>
-            { Self::view_courses(ctx, &s.courses) }
-          </div>
-        }
-      }) }
-    }
-  }
-
-  fn view_courses(ctx: &Context<Self>, courses: &[Vec<Course>]) -> Html {
-    let courses: Vec<&Course> = courses.iter().flatten().collect();
-    html! {
-      if !courses.is_empty() {
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>{ "Code" }</th>
-              <th>{ "Type" }</th>
-              <th>{ "Location" }</th>
-              <th>{ "Occurrence" }</th>
-              <th>{ "Teacher" }</th>
-            </tr>
-          </thead>
-          <tbody>
-            { for courses.into_iter().filter(|c| !c.is_deleted).map(|c| Self::view_course(ctx, c)) }
-          </tbody>
-        </table>
-      }
-    }
-  }
-
-  fn view_course(ctx: &Context<Self>, course: &Course) -> Html {
     let on_delete = ctx.link().callback(move |course_code: String| {
       Msg::UpdateCourse(course_code, Box::new(|c: &mut Course| c.is_deleted = true))
     });
@@ -144,7 +108,11 @@ impl App {
       )
     });
     html! {
-      <CourseComponent course={course.clone()} on_delete={on_delete} on_toggle_visibility={on_toggle_visibility} />
+      { for self.subjects.iter().map(|s| {
+        html! {
+          <SubjectComponent subject={s.clone()} on_delete={on_delete.clone()} on_toggle_visibility={on_toggle_visibility.clone()} />
+        }
+      }) }
     }
   }
 
