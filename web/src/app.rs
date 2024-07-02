@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::io::Cursor;
 
 use calamine::Xlsx;
-use gloo::storage::{LocalStorage, Storage};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -10,6 +9,7 @@ use timetable_optimizer_lib::data::{Course, Subject};
 use timetable_optimizer_lib::excel_parser;
 
 use crate::statistics::StatisticsComponent;
+use crate::storage;
 use crate::subject::SubjectComponent;
 
 pub struct App {
@@ -30,7 +30,7 @@ impl Component for App {
   fn create(_ctx: &Context<Self>) -> Self {
     App {
       readers: HashMap::default(),
-      subjects: Self::load_subjects(),
+      subjects: storage::load_subjects(),
     }
   }
 
@@ -54,7 +54,7 @@ impl Component for App {
         let mut excel: Xlsx<_> = calamine::open_workbook_from_rs(cursor).unwrap();
         let subject = excel_parser::parse_subject(file_name, &mut excel);
         self.subjects.push(subject);
-        self.save_subjects();
+        storage::save_subjects(&self.subjects);
         true
       }
       Msg::UpdateCourse(course_code, update_fn) => {
@@ -70,7 +70,7 @@ impl Component for App {
           })
           .unwrap();
         update_fn(course);
-        self.save_subjects();
+        storage::save_subjects(&self.subjects);
         true
       }
     }
@@ -114,18 +114,6 @@ impl App {
           <SubjectComponent subject={s.clone()} on_delete={on_delete.clone()} on_toggle_visibility={on_toggle_visibility.clone()} />
         }
       }) }
-    }
-  }
-
-  fn save_subjects(&self) {
-    let subjects = serde_json::to_string(&self.subjects).unwrap();
-    LocalStorage::set("subjects", subjects).unwrap();
-  }
-
-  fn load_subjects() -> Vec<Subject> {
-    match LocalStorage::get::<String>("subjects") {
-      Ok(subjects) => serde_json::from_str::<Vec<Subject>>(&subjects).unwrap(),
-      Err(_) => vec![],
     }
   }
 }
