@@ -7,8 +7,9 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use timetable_optimizer_lib::data::{Course, Subject};
-use timetable_optimizer_lib::{excel_parser, stats};
+use timetable_optimizer_lib::excel_parser;
 
+use crate::statistics::StatisticsComponent;
 use crate::subject::SubjectComponent;
 
 pub struct App {
@@ -91,7 +92,7 @@ impl Component for App {
         <label>{ "Subjects:" }</label>
         <input type="file" multiple=true onchange={on_courses_change} />
         { self.view_all_courses(ctx) }
-        { self.view_stats() }
+        <StatisticsComponent subjects={self.subjects.clone()} />
       </main>
     }
   }
@@ -113,17 +114,6 @@ impl App {
           <SubjectComponent subject={s.clone()} on_delete={on_delete.clone()} on_toggle_visibility={on_toggle_visibility.clone()} />
         }
       }) }
-    }
-  }
-
-  fn view_stats(&self) -> Html {
-    html! {
-      <>
-        <h1>{ "Statistics" }</h1>
-        <p>{ format!("Total courses inputted: {}", stats::count_all_courses(&self.subjects)) }</p>
-        <p>{ format!("Total courses in a timetable: {}", stats::count_course_per_timetable(&self.subjects)) }</p>
-        <p>{ format!("Total possible timetables: {}", stats::count_all_timetables(&self.subjects)) }</p>
-      </>
     }
   }
 
