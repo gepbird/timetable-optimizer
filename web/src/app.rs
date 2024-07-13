@@ -1,12 +1,6 @@
-use std::collections::HashMap;
-use std::io::Cursor;
-
-use calamine::Xlsx;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use timetable_optimizer_lib::data::{Course, Subject};
-use timetable_optimizer_lib::excel_parser;
 
 use crate::statistics::StatisticsComponent;
 use crate::storage;
@@ -14,13 +8,11 @@ use crate::subject::SubjectComponent;
 use crate::upload::UploadComponent;
 
 pub struct App {
-  readers: HashMap<String, gloo::file::callbacks::FileReader>,
   subjects: Vec<Subject>,
 }
 
 pub enum Msg {
-  CoursesUploaded(Vec<gloo::file::File>),
-  CourseProcessed(String, Vec<u8>),
+  SubjectsUploaded(Vec<Subject>),
   UpdateCourse(String, Box<dyn Fn(&mut Course)>),
 }
 
@@ -30,31 +22,14 @@ impl Component for App {
 
   fn create(_ctx: &Context<Self>) -> Self {
     App {
-      readers: HashMap::default(),
       subjects: storage::load_subjects(),
     }
   }
 
-  fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+  fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
     match msg {
-      Msg::CoursesUploaded(files) => {
-        self.subjects.clear();
-        for file in files {
-          let file_name = file.name();
-          let link = ctx.link().clone();
-          let reader = gloo::file::callbacks::read_as_bytes(&file, move |bytes| {
-            link.send_message(Msg::CourseProcessed(file_name, bytes.unwrap()));
-          });
-          self.readers.insert(file.name(), reader);
-        }
-        false
-      }
-      Msg::CourseProcessed(file_name, bytes) => {
-        self.readers.remove(&file_name);
-        let cursor = Cursor::new(bytes);
-        let mut excel: Xlsx<_> = calamine::open_workbook_from_rs(cursor).unwrap();
-        let subject = excel_parser::parse_subject(file_name, &mut excel);
-        self.subjects.push(subject);
+      Msg::SubjectsUploaded(subjects) => {
+        self.subjects = subjects;
         storage::save_subjects(&self.subjects);
         true
       }
@@ -78,21 +53,14 @@ impl Component for App {
   }
 
   fn view(&self, ctx: &Context<Self>) -> Html {
-    let on_courses_change = ctx.link().callback(move |e: Event| {
-      let input: HtmlInputElement = e.target_unchecked_into();
-      let files = input.files().unwrap();
-      let gloo_files = (0..files.length())
-        .map(|i| files.get(i).unwrap())
-        .map(gloo::file::File::from)
-        .collect();
-      Msg::CoursesUploaded(gloo_files)
+    let on_courses_change = ctx.link().callback(move |subjects| {
+      Msg::SubjectsUploaded(subjects)
     });
 
     html! {
       <main class="min-h-screen bg-gray-800 text-white">
-        <UploadComponent on_files_processed={Callback::from(|files: Vec<Subject>| gloo::console::log!(files.len()))}/>
         <label>{ "Subjects:" }</label>
-        <input type="file" multiple=true onchange={on_courses_change} />
+        <UploadComponent on_files_processed={on_courses_change}/>
         { self.view_all_courses(ctx) }
         <StatisticsComponent subjects={self.subjects.clone()} />
       </main>
