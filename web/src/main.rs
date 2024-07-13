@@ -3,6 +3,7 @@ mod course;
 mod statistics;
 mod storage;
 mod subject;
+mod upload;
 
 use app::App;
 
