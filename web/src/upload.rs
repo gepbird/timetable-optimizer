@@ -6,12 +6,12 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
-pub struct Props {
+pub struct UploadProps {
   pub on_files_processed: Callback<Vec<Subject>>,
 }
 
 #[function_component(UploadComponent)]
-pub fn upload_component(props: &Props) -> Html {
+pub fn upload_component(props: &UploadProps) -> Html {
   let readers = use_state(Vec::new);
   let processed_files = use_state(Vec::new);
   let queued_files = use_state(Vec::new);

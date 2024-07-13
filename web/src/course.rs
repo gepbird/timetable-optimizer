@@ -3,14 +3,14 @@ use timetable_optimizer_lib::data::Course;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
-pub struct Props {
+pub struct CourseProps {
   pub course: Course,
   pub on_delete: Callback<String>,
   pub on_toggle_visibility: Callback<String>,
 }
 
 #[function_component(CourseComponent)]
-pub fn course_component(props: &Props) -> Html {
+pub fn course_component(props: &CourseProps) -> Html {
   let course = &props.course;
 
   let code = course.code.clone();

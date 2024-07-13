@@ -2,12 +2,12 @@ use timetable_optimizer_lib::{data::Subject, stats};
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
-pub struct Props {
+pub struct StatisticsProps {
   pub subjects: Vec<Subject>,
 }
 
 #[function_component(StatisticsComponent)]
-pub fn statistics_component(props: &Props) -> Html {
+pub fn statistics_component(props: &StatisticsProps) -> Html {
   html! {
     <>
       <h1>{ "Statistics" }</h1>

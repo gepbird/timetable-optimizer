@@ -3,14 +3,14 @@ use timetable_optimizer_lib::data::{Course, Subject};
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
-pub struct Props {
+pub struct SubjectProps {
   pub subject: Subject,
   pub on_delete: Callback<String>,
   pub on_toggle_visibility: Callback<String>,
 }
 
 #[function_component(SubjectComponent)]
-pub fn subject_component(props: &Props) -> Html {
+pub fn subject_component(props: &SubjectProps) -> Html {
   let courses: Vec<&Course> = props.subject.courses.iter().flatten().collect();
   html! {
     <div class="my-6">
