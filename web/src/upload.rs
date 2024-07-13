@@ -50,13 +50,17 @@ pub fn upload_component(props: &Props) -> Html {
         let reader = Rc::new(gloo::file::callbacks::read_as_bytes(
           &queued_file,
           move |bytes| {
-            let bytes = bytes.unwrap();
-            let subject = parse_subject(file_name, bytes);
-            processed_files.set({
-              let mut processed_files = (*processed_files).clone();
-              processed_files.push(subject);
-              processed_files
-            });
+            match bytes {
+              Err(err) => gloo::dialogs::alert(&err.to_string()),
+              Ok(bytes) => {
+                let subject = parse_subject(file_name, bytes);
+                processed_files.set({
+                  let mut processed_files = (*processed_files).clone();
+                  processed_files.push(subject);
+                  processed_files
+                });
+              }
+            }
             queued_files.set(new_queued_files);
           },
         ));
