@@ -90,7 +90,7 @@ impl Component for App {
 
     html! {
       <main class="min-h-screen bg-gray-800 text-white">
-        <UploadComponent />
+        <UploadComponent on_files_processed={Callback::from(|files: Vec<Vec<u8>>| gloo::console::log!(files.len()))}/>
         <label>{ "Subjects:" }</label>
         <input type="file" multiple=true onchange={on_courses_change} />
         { self.view_all_courses(ctx) }

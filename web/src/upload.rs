@@ -3,8 +3,13 @@ use std::rc::Rc;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
+#[derive(Properties, PartialEq)]
+pub struct Props {
+  pub on_files_processed: Callback<Vec<Vec<u8>>>,
+}
+
 #[function_component(UploadComponent)]
-pub fn upload_component() -> Html {
+pub fn upload_component(props: &Props) -> Html {
   let readers = use_state(Vec::new);
   let processed_files: UseStateHandle<Vec<Vec<u8>>> = use_state(Vec::new);
   let queued_files = use_state(Vec::new);
@@ -26,6 +31,7 @@ pub fn upload_component() -> Html {
     })
   };
 
+  let on_files_processed = props.on_files_processed.clone();
   use_effect_with(queued_files, move |queued_files| {
     let queued_files = queued_files.clone();
     let mut new_queued_files = (*queued_files).clone();
@@ -34,7 +40,7 @@ pub fn upload_component() -> Html {
     match queued_file {
       None => {
         if processed_files.len() > 0 {
-          gloo::console::log!("processed: ", processed_files.len());
+          on_files_processed.emit((*processed_files).clone());
         }
       }
       Some(queued_file) => {
