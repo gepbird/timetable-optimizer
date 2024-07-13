@@ -4,7 +4,7 @@ use timetable_optimizer_lib::data::{Course, Subject};
 
 use crate::statistics::StatisticsComponent;
 use crate::storage;
-use crate::subject::SubjectComponent;
+use crate::subject::SubjectsComponent;
 use crate::upload::UploadComponent;
 
 pub struct App {
@@ -56,19 +56,6 @@ impl Component for App {
     let on_courses_change = ctx.link().callback(move |subjects| {
       Msg::SubjectsUploaded(subjects)
     });
-
-    html! {
-      <main class="min-h-screen bg-gray-800 text-white">
-        <label>{ "Subjects:" }</label>
-        <UploadComponent on_files_processed={on_courses_change}/>
-        { self.view_all_courses(ctx) }
-        <StatisticsComponent subjects={self.subjects.clone()} />
-      </main>
-    }
-  }
-}
-impl App {
-  fn view_all_courses(&self, ctx: &Context<Self>) -> Html {
     let on_delete = ctx.link().callback(move |course_code: String| {
       Msg::UpdateCourse(course_code, Box::new(|c: &mut Course| c.is_deleted = true))
     });
@@ -78,12 +65,18 @@ impl App {
         Box::new(|c: &mut Course| c.is_hidden_by_user = !c.is_hidden_by_user),
       )
     });
+
     html! {
-      { for self.subjects.iter().map(|s| {
-        html! {
-          <SubjectComponent subject={s.clone()} on_delete={on_delete.clone()} on_toggle_visibility={on_toggle_visibility.clone()} />
-        }
-      }) }
+      <main class="min-h-screen bg-gray-800 text-white">
+        <label>{ "Subjects:" }</label>
+        <UploadComponent on_files_processed={on_courses_change}/>
+        <SubjectsComponent
+          subjects={self.subjects.clone()}
+          on_delete={on_delete.clone()}
+          on_toggle_visibility={on_toggle_visibility.clone()}
+        />
+        <StatisticsComponent subjects={self.subjects.clone()} />
+      </main>
     }
   }
 }

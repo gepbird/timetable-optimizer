@@ -3,6 +3,28 @@ use timetable_optimizer_lib::data::{Course, Subject};
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
+pub struct SubjectsProps {
+  pub subjects: Vec<Subject>,
+  pub on_delete: Callback<String>,
+  pub on_toggle_visibility: Callback<String>,
+}
+
+#[function_component(SubjectsComponent)]
+pub fn subjects_component(props: &SubjectsProps) -> Html {
+  html! {
+    for props.subjects.iter().map(|subject| {
+      html! {
+        <SubjectComponent
+          subject={subject.clone()}
+          on_delete={props.on_delete.clone()}
+          on_toggle_visibility={props.on_toggle_visibility.clone()}
+        />
+      }
+    })
+  }
+}
+
+#[derive(Properties, PartialEq)]
 pub struct SubjectProps {
   pub subject: Subject,
   pub on_delete: Callback<String>,
