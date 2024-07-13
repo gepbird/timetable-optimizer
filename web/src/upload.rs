@@ -43,6 +43,8 @@ pub fn upload_component(props: &Props) -> Html {
       None => {
         if processed_files.len() > 0 {
           on_files_processed.emit((*processed_files).clone());
+          processed_files.set(Vec::new());
+          readers.set(Vec::new());
         }
       }
       Some(queued_file) => {
