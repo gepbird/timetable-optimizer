@@ -5,8 +5,8 @@ mod storage;
 mod subject;
 mod upload;
 
-use app::App;
+use app::AppComponent;
 
 fn main() {
-  yew::Renderer::<App>::new().render();
+  yew::Renderer::<AppComponent>::new().render();
 }
