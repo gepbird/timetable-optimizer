@@ -1,3 +1,4 @@
+use timetable_optimizer_lib::data::UpdateSubjectsByCourseCode;
 use yew::prelude::*;
 
 use crate::statistics::StatisticsComponent;
@@ -20,17 +21,10 @@ pub fn app_component() -> Html {
     let subjects = subjects.clone();
     move |course_code: String| {
       let mut new_subjects = (*subjects).clone();
-      let course = new_subjects
-        .iter_mut()
-        .find_map(|subject| {
-          subject.courses.iter_mut().find_map(|one_of_courses| {
-            one_of_courses
-              .iter_mut()
-              .find(|course| course.code == course_code)
-          })
-        })
-        .unwrap();
-      course.is_deleted = true;
+      new_subjects.update_subjects_by_course_code(
+        course_code.clone(),
+        Box::new(|course| course.is_deleted = true),
+      );
       storage::save_subjects(&new_subjects);
       subjects.set(new_subjects);
     }
@@ -39,17 +33,10 @@ pub fn app_component() -> Html {
     let subjects = subjects.clone();
     move |course_code: String| {
       let mut new_subjects = (*subjects).clone();
-      let course = new_subjects
-        .iter_mut()
-        .find_map(|subject| {
-          subject.courses.iter_mut().find_map(|one_of_courses| {
-            one_of_courses
-              .iter_mut()
-              .find(|course| course.code == course_code)
-          })
-        })
-        .unwrap();
-      course.is_hidden_by_user = !course.is_hidden_by_user;
+      new_subjects.update_subjects_by_course_code(
+        course_code.clone(),
+        Box::new(|course| course.is_hidden_by_user = !course.is_hidden_by_user),
+      );
       storage::save_subjects(&new_subjects);
       subjects.set(new_subjects);
     }

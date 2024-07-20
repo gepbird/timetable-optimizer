@@ -14,6 +14,24 @@ pub struct Subject {
   pub courses: Vec<OneOfCourse>,
 }
 
+pub trait UpdateSubjectsByCourseCode {
+  fn update_subjects_by_course_code(&mut self, code: String, update_fn: Box<dyn Fn(&mut Course)>);
+}
+impl UpdateSubjectsByCourseCode for Vec<Subject> {
+  fn update_subjects_by_course_code(&mut self, code: String, update_fn: Box<dyn Fn(&mut Course)>) {
+    let course = self
+      .iter_mut()
+      .find_map(|subject| {
+        subject
+          .courses
+          .iter_mut()
+          .find_map(|one_of_courses| one_of_courses.iter_mut().find(|course| course.code == code))
+      })
+      .unwrap();
+    update_fn(course);
+  }
+}
+
 pub type OneOfCourse = Vec<Course>;
 
 #[derive(Debug, Clone, Serialize)]
