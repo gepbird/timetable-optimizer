@@ -10,42 +10,43 @@ use crate::upload::UploadComponent;
 pub fn app_component() -> Html {
   let subjects = use_state(storage::load_subjects);
 
-  let on_subjects_processed = {
+  let update_subjects = {
     let subjects = subjects.clone();
     move |new_subjects| {
       storage::save_subjects(&new_subjects);
       subjects.set(new_subjects);
     }
   };
+
   let on_delete = {
     let subjects = subjects.clone();
+    let update_subjects = update_subjects.clone();
     move |course_code: String| {
       let mut new_subjects = (*subjects).clone();
       new_subjects.update_subjects_by_course_code(
         course_code.clone(),
         Box::new(|course| course.is_deleted = true),
       );
-      storage::save_subjects(&new_subjects);
-      subjects.set(new_subjects);
+      update_subjects(new_subjects);
     }
   };
   let on_toggle_visibility = {
     let subjects = subjects.clone();
+    let update_subjects = update_subjects.clone();
     move |course_code: String| {
       let mut new_subjects = (*subjects).clone();
       new_subjects.update_subjects_by_course_code(
         course_code.clone(),
         Box::new(|course| course.is_hidden_by_user = !course.is_hidden_by_user),
       );
-      storage::save_subjects(&new_subjects);
-      subjects.set(new_subjects);
+      update_subjects(new_subjects);
     }
   };
 
   html! {
     <main class="min-h-screen bg-gray-800 text-white">
       <label>{ "Subjects:" }</label>
-      <UploadComponent on_files_processed={on_subjects_processed}/>
+      <UploadComponent on_files_processed={update_subjects}/>
       <SubjectsComponent
         subjects={(*subjects).clone()}
         on_delete={on_delete.clone()}
