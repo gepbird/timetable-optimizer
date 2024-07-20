@@ -67,9 +67,7 @@ pub struct Course {
   pub occurrence: Occurrence,
   #[serde(skip)]
   hash: GenericArray<u8, U32>,
-  #[serde(skip)]
   pub is_deleted: bool,
-  #[serde(skip)]
   pub is_hidden_by_user: bool,
 }
 
