@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 timetable-optimizer-lib = { path = "../lib" }
-cached = "0.51.3"
+cached = "0.53.1"
 calamine = "0.25.0"
 chrono = { version = "0.4.38", features = ["serde"] }
 imageproc = "0.25.0"
@@ -13,7 +13,7 @@ indicatif = "0.17.8"
 itertools = "0.13.0"
 permutator = "0.4.3"
 rayon = "1.10.0"
-ab_glyph = "0.2.26"
+ab_glyph = "0.2.28"
 rustyline = "14.0.0"
-serde = { version = "1.0.201", features = ["derive"] }
-serde_json = "1.0.117"
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.120"
