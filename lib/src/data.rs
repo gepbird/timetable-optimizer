@@ -143,6 +143,7 @@ pub enum CourseType {
   Lecture,
   Laboratory,
   Practice,
+  ELearning,
 }
 
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize, Default)]

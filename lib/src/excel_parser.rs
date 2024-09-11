@@ -64,6 +64,7 @@ fn parse_course_type(cell: &str) -> CourseType {
     "Elmélet" => CourseType::Lecture,
     "Labor" => CourseType::Laboratory,
     "Gyakorlat" => CourseType::Practice,
+    "E-Learning" => CourseType::ELearning,
     _ => panic!("Invalid course type: {cell}"),
   }
 }
