@@ -5,6 +5,7 @@ use crate::statistics::StatisticsComponent;
 use crate::storage;
 use crate::subject::SubjectsComponent;
 use crate::upload::UploadComponent;
+use crate::timetable_generator::TimetableGenerator;
 
 #[function_component(AppComponent)]
 pub fn app_component() -> Html {
@@ -53,6 +54,7 @@ pub fn app_component() -> Html {
         on_toggle_visibility={on_toggle_visibility.clone()}
       />
       <StatisticsComponent subjects={(*subjects).clone()} />
+      <TimetableGenerator subjects={(*subjects).clone()} />
     </main>
   }
 }
