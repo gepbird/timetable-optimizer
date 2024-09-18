@@ -1,8 +1,14 @@
+mod course;
+mod statistics;
+mod storage;
+mod subject;
+mod timetable_generator;
+mod upload;
+
 use timetable_optimizer_lib::data::UpdateSubjectsByCourseCode;
 use yew::prelude::*;
 
 use crate::statistics::StatisticsComponent;
-use crate::storage;
 use crate::subject::SubjectsComponent;
 use crate::upload::UploadComponent;
 use crate::timetable_generator::TimetableGenerator;
